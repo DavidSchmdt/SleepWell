@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo"><a href="/"><!---<img style="width: 30px; height: 30px;" src="images/logoBlau.png">--->SleepWell™</a></div>
+            <div>
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="/product"><i class="fas fa-bed"></i> Produkte</a>
+                <a href="/about"><i class="fas fa-info-circle"></i> Über Uns</a>
+                <a href="/contact"><i class="fas fa-envelope"></i> Kontakt</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page-specific content goes here -->
+    <main style="margin-top: 80px;"> <!-- Adds space to prevent navbar overlap -->
+        <%- body %>
+    </main>
+
+    <!-- Footer -->
+    
+
+    <!-- Footer -->
+    <footer style="background-color: #f8f8f8; padding: 2em 0; border-top: 1px solid #ddd;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 1em; display: flex; flex-wrap: wrap; justify-content: space-between;">
+            <!-- Logo and Description -->
+            <div style="flex: 1 1 200px; margin-bottom: 1em;">
+                <h3 style="font-weight: bold; margin-bottom: 0.5em;">SleepWell™</h3>
+                <p style="color: #666;"><strong>SleepWell. WakeWell. WorkWell.</strong></p>
+                <p style="color: #666;">Erlebe Schlaf wie nie zuvor. Komfort und Qualität für Ihren besten Schlaf.</p>
+            </div>
+            
+            <!-- Links -->
+            <div style="flex: 1 1 200px; margin-bottom: 1em;">
+                <h4 style="font-weight: bold; margin-bottom: 0.5em;">Schnellzugriff</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="/about" style="color: #333; text-decoration: none;">Über uns</a></li>
+                    <li><a href="/contact" style="color: #333; text-decoration: none;">Kontakt</a></li>
+                    <li><a href="/shipping" style="color: #333; text-decoration: none;">Versand & Lieferung</a></li>
+                    <li><a href="/returns" style="color: #333; text-decoration: none;">Rückgabe</a></li>
+                </ul>
+            </div>
+            
+            <!-- Legal -->
+            <div style="flex: 1 1 200px; margin-bottom: 1em;">
+                <h4 style="font-weight: bold; margin-bottom: 0.5em;">Rechtliches</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="/terms" style="color: #333; text-decoration: none;">AGB</a></li>
+                    <li><a href="/privacy" style="color: #333; text-decoration: none;">Datenschutz</a></li>
+                    <li><a href="/imprint" style="color: #333; text-decoration: none;">Impressum</a></li>
+                </ul>
+            </div>
+            <!-- Newsletter Signup -->
+            <div style="flex: 1 1 200px; margin: 0 auto; text-align: center; max-width: 400px;">
+                <h4 style="font-weight: bold; margin-bottom: 0.5em;">Newsletter</h4>
+                <p style="color: #666;">Erhalten Sie exklusive Angebote und Neuigkeiten direkt in Ihrem Postfach.</p>
+                <form style="display: flex; gap: 0.5em; justify-content: center; align-items: center; margin-top: 1em;">
+                    <input 
+                        type="email" 
+                        placeholder="Ihre E-Mail-Adresse" 
+                        style="padding: 0.8em; width: 65%; height: 40px;border: 1px solid #ccc; border-radius: 5px; font-size: 1em; box-sizing: border-box;"
+                    >
+                    <button 
+                        type="submit" 
+                        style="padding: 0.8em; width: 35%; height: 40px;background-color: #7aceeb; color: #fff; font-size: 1em; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: background-color 0.3s;"
+                        onmouseover="this.style.backgroundColor='#5cb7d6';"
+                        onmouseout="this.style.backgroundColor='#7aceeb';"
+                    >
+                        Anmelden
+                    </button>
+                </form>
+            </div>
+
+
+
+
+        </div>
+        <div style="text-align: center; margin-top: 2em; color: #666;">
+            &copy; 2024 SleepWell™ AG. Alle Rechte vorbehalten. 
+            <br> Es wird keine Haftung für jegliche Schäden übernommen.
+            
+            <p><strong>Die Firma SleepWell™ ist fiktional. </strong> Deshalb entählt diese Seite mur Scheingeschäfte 🤙. 
+                <br><strong>Sämtlicher Inhalt ist nicht ernstzunehmen.</strong> Die Seite existiert nur aus Bildungszwecken.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Sticky navbar on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

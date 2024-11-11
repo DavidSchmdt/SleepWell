@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleepWell™ & WakeWell™ - Premium Schlaf- und Morgenlösungen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        .main-container {
+            max-width: 1200px;
+
+        }
+        /* Adjusted Features Grid */
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5em;
+            margin-top: 2em;
+        }
+        .feature-card {
+            background-color: #f9f9f9;
+            
+        }
+        .feature-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 0.5em;
+        }
+        
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sleepwellImages = [
+                "https://images.unsplash.com/photo-1521783988139-89397d761dce?q=80&w=3125&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            ];
+            const wakewellImages = [
+                "https://images.unsplash.com/photo-1519585969732-0d3e30255220?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwbWFjaGluZXxlbnwwfDB8MHx8fDI%3D",
+                "https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=2972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            ];
+            
+            let currentIndex = 0;
+            const carousels = document.querySelectorAll('.carousel');
+
+            // Initialize Carousel for each product section
+            function initializeCarousel(carouselElement, images) {
+                const imageElements = carouselElement.querySelectorAll('img');
+                const buttons = carouselElement.querySelectorAll('.carousel-controls button');
+
+                // Set the first image as active immediately
+                imageElements[0].src = images[0];
+                imageElements[0].classList.add('active');
+
+                buttons.forEach((btn, index) => {
+                    btn.addEventListener('click', () => {
+                        currentIndex = (currentIndex + (index === 0 ? -1 : 1) + images.length) % images.length;
+                        updateCarousel(imageElements, images);
+                    });
+                });
+            }
+
+            function updateCarousel(imageElements, images) {
+                imageElements.forEach((img, i) => {
+                    img.src = images[i] || "";
+                    img.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            // Initialize SleepWell carousel
+            const sleepwellCarousel = document.querySelector('#sleepwell .carousel');
+            initializeCarousel(sleepwellCarousel, sleepwellImages);
+
+            // Initialize WakeWell carousel
+            const wakewellCarousel = document.querySelector('#wakewell .carousel');
+            initializeCarousel(wakewellCarousel, wakewellImages);
+        });
+    </script>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- SleepWell™ Section -->
+        <div class="product-section" id="sleepwell">
+            <!-- Full-Width Carousel for SleepWell Images -->
+            <div class="carousel">
+                <img src="" alt="SleepWell Image">
+                <div class="carousel-controls">
+                    <button>&#10094;</button>
+                    <button>&#10095;</button>
+                </div>
+            </div>
+
+            <!-- Content for SleepWell -->
+            <div class="content">
+                <h1>SleepWell™ - Perfekter Schlaf wie nie zuvor</h1>
+                <p>Das SleepWell™ Bett bietet eine perfekte Kombination aus Komfort und Technologie und garantiert eine erholsame Nacht.</p>
+                
+                <!-- Purchase Button for SleepWell -->
+                <a href="/buy-sleepwell" class="purchase-button">SleepWell™ kaufen - 6.999,69 €</a>
+
+                <!-- Features for SleepWell -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>🌙 MindSync™ Schlafanalyse</h3>
+                        <p>Erfasst jede Nacht über 200 Parameter und passt dein Bett in Echtzeit an deinen Schlafrhythmus an.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔥 DynamicTemp™ Temperaturkontrolle</h3>
+                        <p>Nie wieder schwitzen oder frieren – die Temperatur passt sich dynamisch für perfekten Komfort an.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🌌 DreamCraft™ Traumsteuerung</h3>
+                        <p>Träume bewusst steuern: Wählen Sie Ihre Traumreise und genießen Sie die Nacht wie nie zuvor.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎶 WaveScape™ Klangwelten</h3>
+                        <p>Sanfte Klänge wie Meeresrauschen oder Waldgeräusche sorgen für tiefen, erholsamen Schlaf.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🧘 BioSync™ perfektes Aufwachen</h3>
+                        <p>Intelligentes Wecken im perfekten Moment, um sanft und erfrischt in den Tag zu starten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WakeWell™ Section -->
+        <div class="product-section" id="wakewell">
+            <!-- Full-Width Carousel for WakeWell Images -->
+            <div class="carousel">
+                <img src="" alt="WakeWell Image">
+                <div class="carousel-controls">
+                    <button>&#10094;</button>
+                    <button>&#10095;</button>
+                </div>
+            </div>
+
+            <!-- Content for WakeWell -->
+            <div class="content">
+                <h1>WakeWell™ - Dein perfekter Morgen</h1>
+                <p>WakeWell™ sorgt für deinen perfekten Start in den Tag, abgestimmt auf deinen individuellen Rhythmus.</p>
+                
+                <!-- Purchase Button for WakeWell -->
+                <a href="/buy-wakewell" class="purchase-button" style="background-color: #ff9f1c;">WakeWell™ vorbestellen - 1.299,99 €</a>
+
+                <!-- Features for WakeWell -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>💥 PulseBoost™ Energie-Release</h3>
+                        <p>Maximale Morgenenergie mit individuell dosiertem Koffein-Boost für den perfekten Start.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>☕ AromaBrew™ - Frischer Kaffee</h3>
+                        <p>Frisch aufgebrühter Kaffee wartet, sobald Sie aufwachen – für den perfekten Start in den Tag.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💊 VitalCore™ Nährstoffdosierung</h3>
+                        <p>Automatische Anpassung an Ihren Bedarf, um Sie mit Nährstoffen für den Tag zu versorgen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>❄️ ThermoSense™ Komfortanpassung</h3>
+                        <p>Optimale Temperaturregelung für ein angenehmes Aufwachen, das auf Sie abgestimmt ist.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎶 MoodWave™ musikalische Morgenanpassung</h3>
+                        <p>Individuell abgestimmte Musik, um den perfekten Ton für den Start in den Tag zu setzen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

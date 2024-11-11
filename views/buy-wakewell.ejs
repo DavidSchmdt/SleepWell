@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WakeWell™ vorbestellen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/your/stylesheet.css"> <!-- Verlinke die zentrale CSS-Datei -->
+    <script>
+        let originalPosition = { x: 0, y: 0 };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const button = document.getElementById('buyButton');
+            originalPosition.x = button.offsetLeft;
+            originalPosition.y = button.offsetTop;
+        });
+
+        function moveButton() {
+            const button = document.getElementById('buyButton');
+            button.innerText = "Drück mich nicht!";
+            const randomOffsetX = Math.floor(Math.random() * 300) - 150;
+            const randomOffsetY = Math.floor(Math.random() * 300) - 150;
+            button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
+            setTimeout(() => {
+                button.style.transform = "translate(0, 0)";
+                button.innerText = "Jetzt WakeWell™ vorbestellen";
+            }, 3000);
+        }
+    </script>
+</head>
+<body class="page-body">
+
+<section class="product-overview">
+    <!-- Product Image -->
+    <div style="flex: 1;">
+        <img src="https://images.unsplash.com/photo-1528884504895-e749888f6c2a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwbWFjaGluZXxlbnwwfDF8MHx8fDI%3D" alt="WakeWell Device" class="product-overview-img">
+    </div>
+    <!-- Product Details -->
+    <div class="product-details">
+        <h1 class="product-title">WakeWell™</h1>
+        <p class="text-paragraph">Ein revolutionärer Morgenbegleiter, der deinen Tag mit Energie startet.</p>
+        
+        <hr class="product-divider">
+        
+        <!-- Price & Pre-Order Button -->
+        <p class="product-price">Preis: 1.299,99 €</p>
+        <p class="product-installment">Verfügbar zur Vorbestellung, Lieferung in 2-3 Monaten.</p>
+        
+        <div class="add-to-cart-container">
+            <button style="background-color: #ff9f1c;" id="buyButton" class="buy-button" onclick="moveButton()" >Jetzt WakeWell™ vorbestellen</button>
+        </div>
+        
+        <!-- Add-On Options -->
+        <h3 class="heading-secondary">Zusatzoptionen</h3>
+        <form action="/preorder-confirmation" method="post" class="add-on-options">
+            <label>
+                <input type="checkbox" name="add-ons" value="daily-custom-coffee"> Daily Custom Coffee Subscription - 19,99 € / Monat
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="nutrient-boost"> Morning Nutrient Boost Pack - 49,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="extended-service-plan"> Erweiterter Service-Plan (3 Jahre) - 149,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="personal-wake-setup"> Personalisiertes Wake-Up Setup - 99,99 €
+            </label>
+        </form>
+    </div>
+</section>
+
+<section class="product-features">
+    <h2 class="heading-primary">Schlüsselfunktionen von WakeWell™</h2>
+    <p class="text-paragraph">Starten Sie Ihren Tag mit einem personalisierten, energiegeladenen Morgen.</p>
+    
+    <!-- Feature Grid -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3 class="feature-card-title">💥 PulseBoost™ Energie-Release</h3>
+            <p class="feature-card-description">Maximale Morgenenergie mit individuell dosiertem Koffein-Boost für den perfekten Start.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">☕ AromaBrew™ - Frischer Kaffee</h3>
+            <p class="feature-card-description">Frisch aufgebrühter Kaffee wartet, sobald Sie aufwachen – für den perfekten Start in den Tag.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">💊 VitalCore™ Nährstoffdosierung</h3>
+            <p class="feature-card-description">Automatische Anpassung an Ihren Bedarf, um Sie mit Nährstoffen für den Tag zu versorgen.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">❄️ ThermoSense™ Komfortanpassung</h3>
+            <p class="feature-card-description">Optimale Temperaturregelung für ein angenehmes Aufwachen, das auf Sie abgestimmt ist.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">🎶 MoodWave™ musikalische Morgenanpassung</h3>
+            <p class="feature-card-description">Individuell abgestimmte Musik, um den perfekten Ton für den Start in den Tag zu setzen.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

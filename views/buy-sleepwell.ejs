@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleepWell™ kaufen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/your/stylesheet.css"> <!-- Verlinke die aktualisierte zentrale CSS-Datei -->
+    <script>
+        let originalPosition = { x: 0, y: 0 };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const button = document.getElementById('buyButton');
+            originalPosition.x = button.offsetLeft;
+            originalPosition.y = button.offsetTop;
+        });
+
+        function moveButton() {
+            const button = document.getElementById('buyButton');
+            button.innerText = "Drück mich nicht!";
+            const randomOffsetX = Math.floor(Math.random() * 300) - 150;
+            const randomOffsetY = Math.floor(Math.random() * 300) - 150;
+            button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
+            setTimeout(() => {
+                button.style.transform = "translate(0, 0)";
+                button.innerText = "Jetzt SleepWell™ kaufen";
+            }, 3000);
+        }
+    </script>
+</head>
+<body class="page-body">
+
+<section class="product-overview">
+    <!-- Product Image -->
+    <div class="product-overview-img">
+        <img src="https://images.unsplash.com/photo-1531835551805-16d864c8d311?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlZHxlbnwwfDF8MHx8fDI%3D" alt="SleepWell Bed">
+    </div>
+    <!-- Product Details -->
+    <div class="product-details">
+        <h1 class="product-title">SleepWell™</h1>
+        <p class="text-paragraph">Das fortschrittlichste Schlafsystem für höchste Schlafqualität und Komfort.</p>
+        
+        <hr class="product-divider">
+        
+        <!-- Price & Installment -->
+        <p class="product-price">Preis: 6.999,69 €</p>
+        <p class="product-installment">Monatliche Raten: 299,99 € / Monat für 24 Monate</p>
+        
+        <!-- Add to Cart Button -->
+        <div class="add-to-cart-container">
+            <button id="buyButton" class="buy-button" onclick="moveButton()">Jetzt SleepWell™ kaufen</button>
+        </div>
+        
+        <!-- Add-On Options -->
+        <h3 class="heading-secondary">Zusatzleistungen</h3>
+        <form action="/purchase-confirmation" method="post" class="add-on-options">
+            <label>
+                <input type="checkbox" name="add-ons" value="WakeWell"> WakeWell™ vorbestellen - 1299,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="extended-warranty"> Erweiterte Garantie (5 Jahre) - 199,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="white-glove-service"> White-Glove-Lieferservice und Aufbau - 99,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="customization"> Personalisierte Bettwäsche und Kissen - 149,99 €
+            </label>
+            <label>
+                <input type="checkbox" name="add-ons" value="sleep-coaching"> Persönliches Schlafcoaching (6 Monate) - 399,99 €
+            </label>
+        </form>
+    </div>
+</section>
+
+<section class="product-features">
+    <h2 class="heading-primary">Schlüsselfunktionen von SleepWell™</h2>
+    <p class="text-paragraph">Von High-Tech-Schlafanalyse bis zur perfekten Temperaturkontrolle.</p>
+    
+    <!-- Feature Grid -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3 class="feature-card-title">🌙 MindSync™ Schlafanalyse</h3>
+            <p class="feature-card-description">Erfasst jede Nacht über 200 Parameter und passt dein Bett in Echtzeit an deinen Schlafrhythmus an.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">🔥 DynamicTemp™ Temperaturkontrolle</h3>
+            <p class="feature-card-description">Nie wieder schwitzen oder frieren – die Temperatur passt sich dynamisch für perfekten Komfort an.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">🌌 DreamCraft™ Traumsteuerung</h3>
+            <p class="feature-card-description">Träume bewusst steuern: Wählen Sie Ihre Traumreise und genießen Sie die Nacht wie nie zuvor.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">🎶 WaveScape™ Klangwelten</h3>
+            <p class="feature-card-description">Sanfte Klänge wie Meeresrauschen oder Waldgeräusche sorgen für tiefen, erholsamen Schlaf.</p>
+        </div>
+        <div class="feature-card">
+            <h3 class="feature-card-title">🧘 BioSync™ perfektes Aufwachen</h3>
+            <p class="feature-card-description">Intelligentes Wecken im perfekten Moment, um sanft und erfrischt in den Tag zu starten.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
