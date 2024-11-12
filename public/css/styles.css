@@ -29,7 +29,7 @@ h1, #site-container h1 {
 }
 h2, #site-container h2 {
     font-size: 1.8em;
-    color: #4485cf;
+    color: #01a8c9;
     margin-top: 2em;
     margin-bottom: 0.5em;
 }
@@ -56,7 +56,7 @@ li{
 
 /* Links */
 a{
-    color: #4388d6;
+    color: #7aceeb;
     text-decoration: none;
     font-weight: bold;
 }
@@ -180,32 +180,33 @@ a:hover{
 .hero-text p {
     font-size: 1.5em;
     margin: 20px 0;
-    color: rgb(206, 206, 206);
+    color: #ccc;
 }
 
 /* ================= CTA Button ================= */
-.cta-button {
+.cta-button, submit-button{
     display: inline-block;
     padding: 15px 30px;
-    background-color: #7aceeb;
+    background-color: #01a8c9;
     color: #fff;
     text-decoration: none;
     font-weight: 700;
     border-radius: 5px;
+    border-color: transparent;
     transition: background-color 0.3s, transform 0.3s;
     margin: 20px;
 }
-.cta-button:hover {
-    background-color: #ff6b6b;
+.cta-button:hover ,submit-button:hover {
+    background-color: #ff9f1c;
     transform: scale(1.05);
 }
 
 #alt{
-    background-color: rgb(209, 144, 39);
+    background-color: #ff9f1c ;
 }
 
 #alt:hover{
-    background-color: rgb(162, 62, 142);
+    background-color: #7aceeb;
 }
 
 /* ================= Content Section ================= */
@@ -254,7 +255,7 @@ a:hover{
 }
 .feature-card h3 {
     font-size: 1.4em;
-    color: #0070f3;
+    color:#199fcb;
     margin-bottom: 0.5em;
 }
 .feature-card p {
@@ -317,23 +318,6 @@ a:hover{
     border-radius: 50%;
 }
 
-/* ================= Purchase Button ================= */
-.purchase-button {
-    display: inline-block;
-    padding: 1em 2em;
-    margin-top: 1em;
-    background-color: #ff6b6b;
-    color: #fff;
-    font-size: 1.2em;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-.purchase-button:hover {
-    background-color: #ff4b4b;
-}
 
 /* ================= Footer ================= */
 footer {
@@ -408,7 +392,7 @@ footer input, footer button {
 }
 .heading-secondary {
     font-size: 1.8em;
-    color: #4f91ab;
+    color: #01a8c9;
     margin-top: 2em;
     margin-bottom: 0.5em;
 }
@@ -467,7 +451,7 @@ footer input, footer button {
     margin-left: -100px; /* Passe diesen Wert an, um die gewünschte Verschiebung zu erreichen */
 }
 /* Buy Button */
-.buy-button {
+.buy-button{
     padding: 1em 2em;
     background-color: #7aceeb;
     color: #fff;
@@ -481,8 +465,30 @@ footer input, footer button {
     margin-top: 1em;
     position: relative;
 }
-.buy-button:hover {
-    background-color: #5cb7d6;
+
+.purchase-button {
+    display: inline-block;
+    padding: 1em 2em;
+    margin-top: 1em;
+    background-color: #199fcb;
+    color: #fff;
+    font-size: 1.2em;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.buy-button:hover , .purchase-button:hover{
+    background-color: #ff9f1c;
+}
+
+#prepurchase {
+    background-color: #ff9f1c;
+}
+
+#prepurchase:hover {
+    background-color: #ff4b4b;
 }
 
 /* Product Features Section */
@@ -508,7 +514,7 @@ footer input, footer button {
 }
 .feature-card-title {
     font-size: 1.4em;
-    color: #67a2e5;
+    color: #005f73;
     margin-bottom: 0.5em;
 }
 .feature-card-description {

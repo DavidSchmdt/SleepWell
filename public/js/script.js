@@ -43,3 +43,26 @@ window.addEventListener('scroll', () => {
 scrollElements.forEach((el) => {
     hideScrollElement(el);
 });
+
+let originalPosition = { x: 0, y: 0 };
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Speichere die ursprüngliche Position des Buttons, wenn das Dokument geladen wurde
+    const button = document.getElementById('buyButton');
+    originalPosition.x = button.offsetLeft;
+    originalPosition.y = button.offsetTop;
+});
+
+function moveButton() {
+    // Button bewegt sich und ändert den Text für eine gewisse Zeit
+    const button = document.getElementById('buyButton');
+    button.innerText = "Drück mich nicht!";
+    const randomOffsetX = Math.floor(Math.random() * 300) - 150;
+    const randomOffsetY = Math.floor(Math.random() * 300) - 150;
+    button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
+    setTimeout(() => {
+        // Button kehrt nach 3 Sekunden zurück zur Originalposition und ändert den Text zurück
+        button.style.transform = "translate(0, 0)";
+        button.innerText = "Jetzt SleepWell™ kaufen";
+    }, 3000);
+}
