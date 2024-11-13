@@ -1,128 +1,4 @@
-<script>
-    let originalPosition = { x: 0, y: 0 };
-
-    document.addEventListener("DOMContentLoaded", function() {
-        // Speichere die ursprüngliche Position des Buttons, wenn das Dokument geladen wurde
-        const button = document.getElementById('prepurchase');
-        originalPosition.x = button.offsetLeft;
-        originalPosition.y = button.offsetTop;
-    });
-
-    function moveButton() {
-        // Button bewegt sich und ändert den Text für eine gewisse Zeit
-        const button = document.getElementById('prepurchase');
-        button.innerText = "Drück mich nicht!";
-        const randomOffsetX = Math.floor(Math.random() * 300) - 150;
-        const randomOffsetY = Math.floor(Math.random() * 300) - 150;
-        button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
-        setTimeout(() => {
-            // Button kehrt nach 3 Sekunden zurück zur Originalposition und ändert den Text zurück
-            button.style.transform = "translate(0, 0)";
-            button.innerText = "Jetzt SleepWell™ kaufen";
-        }, 3000);
-    }
-
-    // Carousel functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const sleepwellImages = [
-            "../images/SleepWell/SleepwellClean1.png",
-            "../images/SleepWell/SleepwellClean2.png",
-            "../images/SleepWell/SleepwellClean3.png",
-            "../images/SleepWell/SleepwellClean4.png",
-            "../images/SleepWell/SleepwellClean5.png"
-        ];
-
-        let currentIndex = 0;
-
-        function initializeCarousel(carouselElement, images) {
-            const imageElement = carouselElement.querySelector('img');
-            const buttons = carouselElement.querySelectorAll('.carousel-controls button');
-
-            // Set initial image
-            imageElement.src = images[currentIndex];
-            imageElement.classList.add('active');
-
-            // Add event listeners to control buttons
-            buttons[0].addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                updateCarousel(imageElement, images);
-            });
-
-            buttons[1].addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % images.length;
-                updateCarousel(imageElement, images);
-            });
-        }
-
-        function updateCarousel(imageElement, images) {
-            imageElement.src = images[currentIndex];
-        }
-
-        // Initialize carousel for SleepWell product
-        const sleepwellCarousel = document.querySelector('.product-overview-img .carousel');
-        initializeCarousel(sleepwellCarousel, sleepwellImages);
-    });
-
-    // dots
-    document.addEventListener('DOMContentLoaded', function() {
-    const sleepwellImages = [
-        "../images/SleepWell/SleepwellClean1.png",
-        "../images/SleepWell/SleepwellClean2.png",
-        "../images/SleepWell/SleepwellClean3.png",
-        "../images/SleepWell/SleepwellClean4.png",
-        "../images/SleepWell/SleepwellClean5.png"
-    ];
-
-    let currentIndex = 0;
-
-    function initializeCarousel(carouselElement, images) {
-        const imageElement = carouselElement.querySelector('img');
-        const buttons = carouselElement.querySelectorAll('.carousel-controls button');
-        const indicatorsContainer = carouselElement.querySelector('.carousel-indicators');
-
-        // Set initial image
-        imageElement.src = images[currentIndex];
-
-        // Create indicator dots
-        images.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            if (index === currentIndex) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                currentIndex = index;
-                updateCarousel(imageElement, images, indicatorsContainer);
-            });
-            indicatorsContainer.appendChild(dot);
-        });
-
-        // Add event listeners to control buttons
-        buttons[0].addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateCarousel(imageElement, images, indicatorsContainer);
-        });
-
-        buttons[1].addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % images.length;
-            updateCarousel(imageElement, images, indicatorsContainer);
-        });
-    }
-
-    function updateCarousel(imageElement, images, indicatorsContainer) {
-        imageElement.src = images[currentIndex];
-
-        // Update active dot
-        const dots = indicatorsContainer.querySelectorAll('.dot');
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentIndex);
-        });
-    }
-
-    // Initialize carousel for SleepWell product
-    const sleepwellCarousel = document.querySelector('.product-overview-img .carousel');
-    initializeCarousel(sleepwellCarousel, sleepwellImages);
-});
-
-</script>
+<script src="../js/script.js"></script>
 
 <body class="page-body">
 
@@ -148,32 +24,35 @@
         <hr class="product-divider">
         
         <!-- Preis & Ratenzahlung -->
-        <p class="product-price">Preis: 6.999,69 €</p>
-        <p class="product-installment">Monatliche Raten: 299,99 € / Monat für 24 Monate</p>
+        <p class="product-price">Preis: <span id="base-price">6 999.69</span> €</p>
+        <p class="total-price">Gesamtpreis: <span id="total-price">6 999.69</span> €</p>
+
+        <p class="product-installment">Monatliche Raten: <span id="monthly-installment">349,98 €</span> € / Monat für 24 Monate</p>
         
         <!-- Kauf-Button -->
         <div class="add-to-cart-container">
-            <button id="buyButton" class="buy-button" onclick="moveButton()">Jetzt SleepWell™ kaufen</button>
+            <button id="buyButton" class="buy-button" onclick="moveButton(event)">Jetzt SleepWell™ kaufen</button>
         </div>
         
         <!-- Zusatzleistungen -->
         <h3 class="heading-secondary">Zusatzleistungen</h3>
         <form action="/purchase-confirmation" method="post" class="add-on-options">
             <label>
-                <input type="checkbox" name="add-ons" value="WakeWell"> WakeWell™ vorbestellen - 1299,99 €
+                <input type="checkbox" name="add-ons" value="1299.99" onchange="updateTotalPrice()"> WakeWell™ vorbestellen - 1299,99 €
             </label>
             <label>
-                <input type="checkbox" name="add-ons" value="extended-warranty"> Erweiterte Garantie (5 Jahre) - 199,99 €
+                <input type="checkbox" name="add-ons" value="199.99" onchange="updateTotalPrice()"> Erweiterte Garantie (5 Jahre) - 199,99 €
             </label>
             <label>
-                <input type="checkbox" name="add-ons" value="white-glove-service"> White-Glove-Lieferservice und Aufbau - 99,99 €
+                <input type="checkbox" name="add-ons" value="99.99" onchange="updateTotalPrice()"> White-Glove-Lieferservice und Aufbau - 99,99 €
             </label>
             <label>
-                <input type="checkbox" name="add-ons" value="customization"> Personalisierte Bettwäsche und Kissen - 149,99 €
+                <input type="checkbox" name="add-ons" value="149.99" onchange="updateTotalPrice()"> Personalisierte Bettwäsche und Kissen - 149,99 €
             </label>
             <label>
-                <input type="checkbox" name="add-ons" value="sleep-coaching"> Persönliches Schlafcoaching (6 Monate) - 399,99 €
+                <input type="checkbox" name="add-ons" value="399.99" onchange="updateTotalPrice()"> Persönliches Schlafcoaching (6 Monate) - 399,99 €
             </label>
+            
         </form>
     </div>
 </section>

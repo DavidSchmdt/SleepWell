@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SleepWell™ & WakeWell™ - Premium Schlaf- und Morgenlösungen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         
         .main-container {
@@ -21,73 +15,53 @@
             background-color: #f9f9f9;
             
         }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5em;
+            margin-top: 2em;
+        }
+            
+        .feature-card {
+            background-color: #f9f9f9;
+            padding: 1em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 130px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+    
         .feature-card h3 {
             font-size: 1.2em;
             margin-bottom: 0.5em;
         }
-        
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sleepwellImages = [
-                "../images/SleepWell/1.png",
-                "../images/SleepWell/2.png",
-                "../images/SleepWell/3.png"
-            ];
-            const wakewellImages = [
-                "../images/WakeWell/1.png"
-                ];
             
-            let currentIndex = 0;
-            const carousels = document.querySelectorAll('.carousel');
-
-            // Initialize Carousel for each product section
-            function initializeCarousel(carouselElement, images) {
-                const imageElements = carouselElement.querySelectorAll('img');
-                const buttons = carouselElement.querySelectorAll('.carousel-controls button');
-
-                // Set the first image as active immediately
-                imageElements[0].src = images[0];
-                imageElements[0].classList.add('active');
-
-                buttons.forEach((btn, index) => {
-                    btn.addEventListener('click', () => {
-                        currentIndex = (currentIndex + (index === 0 ? -1 : 1) + images.length) % images.length;
-                        updateCarousel(imageElements, images);
-                    });
-                });
-            }
-
-            function updateCarousel(imageElements, images) {
-                imageElements.forEach((img, i) => {
-                    img.src = images[i] || "";
-                    img.classList.toggle('active', i === currentIndex);
-                });
-            }
-
-            // Initialize SleepWell carousel
-            const sleepwellCarousel = document.querySelector('#sleepwell .carousel');
-            initializeCarousel(sleepwellCarousel, sleepwellImages);
-
-            // Initialize WakeWell carousel
-            const wakewellCarousel = document.querySelector('#wakewell .carousel');
-            initializeCarousel(wakewellCarousel, wakewellImages);
-        });
-    </script>
+        .feature-card p {
+            overflow: hidden;
+            height: 100px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: height 0.3s ease;
+        }
+            
+        .feature-card:hover {
+            height: auto;
+        }
+            
+        .feature-card:hover p {
+            height: auto;
+            white-space: normal;
+        }
+    </style>
 </head>
 <body>
 
     <div class="main-container">
         <!-- SleepWell™ Section -->
         <div class="product-section" id="sleepwell">
-            <!-- Full-Width Carousel for SleepWell Images -->
-            <div class="carousel">
-                <img src="" alt="SleepWell Image">
-                <div class="carousel-controls">
-                    <button>&#10094;</button>
-                    <button>&#10095;</button>
-                </div>
-            </div>
+            <img class= "carousel" src="../images/SleepWell/1cut.png">
 
             <!-- Content for SleepWell -->
             <div class="content">
@@ -124,14 +98,7 @@
 
         <!-- WakeWell™ Section -->
         <div class="product-section" id="wakewell">
-            <!-- Full-Width Carousel for WakeWell Images -->
-            <div class="carousel">
-                <img src="" alt="WakeWell Image">
-                <div class="carousel-controls">
-                    <button>&#10094;</button>
-                    <button>&#10095;</button>
-                </div>
-            </div>
+            <img class= "carousel" src="../images/WakeWell/1.png">
 
             <!-- Content for WakeWell -->
             <div class="content">
@@ -144,11 +111,11 @@
                 <!-- Features for WakeWell -->
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3>💥 PulseBoost™ Energie-Release</h3>
-                        <p>Maximale Morgenenergie mit individuell dosiertem Koffein-Boost für den perfekten Start.</p>
+                        <h3>💥 PulseBoost™ Energy-Release</h3>
+                        <p>Maximale Morgenenergie mit individuell bis zu 100mal stärker dosiertem Koffein-Boost für den perfekten Start.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>☕ AromaBrew™ - Frischer Kaffee</h3>
+                        <h3>☕ AromaBrew™</h3>
                         <p>Frisch aufgebrühter Kaffee wartet, sobald Sie aufwachen – für den perfekten Start in den Tag.</p>
                     </div>
                     <div class="feature-card">
@@ -156,17 +123,52 @@
                         <p>Automatische Anpassung an Ihren Bedarf, um Sie mit Nährstoffen für den Tag zu versorgen.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>❄️ ThermoSense™ Komfortanpassung</h3>
+                        <h3>❄️ ThermoSense™</h3>
                         <p>Optimale Temperaturregelung für ein angenehmes Aufwachen, das auf Sie abgestimmt ist.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>🎶 MoodWave™ musikalische Morgenanpassung</h3>
+                        <h3>🎶 MoodWave™</h3>
                         <p>Individuell abgestimmte Musik, um den perfekten Ton für den Start in den Tag zu setzen.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="main-container">
+        <!-- Integration SleepWell & WakeWell Section -->
+        <div class="product-section" id="integration">
+            <img class="carousel" src="../images/IntegrationGlow.png">
+                    <div class="content">
+                        <h1>DreamSync™- Die perfekte Synergie</h1>
+                        <p>Mit der DreamSync™ App verbinden sich SleepWell™ und WakeWell™ zu einem einzigartigen System, das Schlaf- und Morgenroutinen harmonisch aufeinander abstimmt. Durch die Kombination der Stärken beider Produkte entsteht ein nahtloser Übergang von erholsamer Nacht zu energiegeladenem Morgen.</p>
+            
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <h3>🌡 DynamicTemp™ & ThermoSense™</h3>
+                                <p>DynamicTemp™ im SleepWell™ hält die optimale Schlaftemperatur, während ThermoSense™ am Morgen die perfekte Aufwachtemperatur einstellt.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>🙇 BioSync™ & Smart WakeSync™</h3>
+                                <p>BioSync™ passt sich deinem Schlafzyklus an, und Smart WakeSync™ koordiniert das Aufwachen ideal mit deinem Morgenrhythmus.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>💥 PulseBoost™ & DeepRelax™</h3>
+                                <p>DeepRelax™ löst Verspannungen nachts, und PulseBoost™ sorgt morgens für den Energie-Boost, den du brauchst.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>☕ AromaBrew™ & Sleep Insights</h3>
+                                <p>Sleep Insights stimmt AromaBrew™ perfekt auf deine Aufwachzeit ab, damit du mit frischem Kaffeeduft startest.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>📊 Sleep & Morning Reports</h3>
+                                <p>Erhalte tägliche Berichte über deinen Schlaf und deine Morgenroutine mit Empfehlungen für optimale Erholung.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    
 
 </body>
 </html>

@@ -1,68 +1,122 @@
+// Unveränderte Position des Buttons speichern
+let originalPosition = { x: 0, y: 0 };
 
- // Navbar background change on scroll
- window.addEventListener('scroll', function() {
-    const navbar = document.getElementById('navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector('.buy-button');
+    if (button) {
+        originalPosition.x = button.offsetLeft;
+        originalPosition.y = button.offsetTop;
     }
 });
 
-// Scroll animations
-const scrollElements = document.querySelectorAll('.content-section');
-const elementInView = (el, dividend = 1) => {
-    const elementTop = el.getBoundingClientRect().top;
-    return (
-        elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-    );
-};
-const displayScrollElement = (element) => {
-    element.classList.add('visible');
-    element.style.transform = "translateY(0)";
-    element.style.opacity = "1";
-};
-const hideScrollElement = (element) => {
-    element.style.transform = "translateY(100px)";
-    element.style.opacity = "0";
-};
-const handleScrollAnimation = () => {
-    scrollElements.forEach((el) => {
-        if (elementInView(el, 1.25)) {
-            displayScrollElement(el);
-        } else {
-            hideScrollElement(el);
-        }
-    });
-};
-window.addEventListener('scroll', () => {
-    handleScrollAnimation();
-});
-
-// Initial hide for scroll elements
-scrollElements.forEach((el) => {
-    hideScrollElement(el);
-});
-
-let originalPosition = { x: 0, y: 0 };
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Speichere die ursprüngliche Position des Buttons, wenn das Dokument geladen wurde
-    const button = document.getElementById('buyButton');
-    originalPosition.x = button.offsetLeft;
-    originalPosition.y = button.offsetTop;
-});
-
-function moveButton() {
-    // Button bewegt sich und ändert den Text für eine gewisse Zeit
-    const button = document.getElementById('buyButton');
+// Funktion zum Bewegen des Buttons
+function moveButton(event) {
+    const button = event.target; // Zugriff auf den spezifischen Button, der geklickt wurde
     button.innerText = "Drück mich nicht!";
     const randomOffsetX = Math.floor(Math.random() * 300) - 150;
     const randomOffsetY = Math.floor(Math.random() * 300) - 150;
     button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
     setTimeout(() => {
-        // Button kehrt nach 3 Sekunden zurück zur Originalposition und ändert den Text zurück
         button.style.transform = "translate(0, 0)";
-        button.innerText = "Jetzt SleepWell™ kaufen";
+        
+        // Button-Text je nach Button ID setzen
+        button.innerText = button.id === "buyButton" ? "Jetzt SleepWell™ kaufen" : "Jetzt WakeWell™ vorbestellen";
     }, 3000);
 }
+
+
+
+// Bilder für beide Seiten definieren
+const wakewellImages = [
+    "../images/WakeWell/WakewellClean1.png",
+    "../images/WakeWell/WakewellClean2.png",
+    "../images/WakeWell/WakewellClean3.png",
+    "../images/WakeWell/WakewellClean4.png"
+];
+
+const sleepwellImages = [
+    "../images/SleepWell/SleepwellClean1.png",
+    "../images/SleepWell/SleepwellClean2.png",
+    "../images/SleepWell/SleepwellClean3.png",
+    "../images/SleepWell/SleepwellClean4.png",
+    "../images/SleepWell/SleepwellClean5.png"
+];
+
+// Funktion zur Initialisierung des Karussells
+function initializeCarousel(carouselElement, images) {
+    let currentIndex = 0;
+    const imageElement = carouselElement.querySelector('img');
+    const buttons = carouselElement.querySelectorAll('.carousel-controls button');
+    const indicatorsContainer = carouselElement.querySelector('.carousel-indicators');
+
+    // Bilder setzen und nur einmal Dots hinzufügen
+    imageElement.src = images[currentIndex];
+    indicatorsContainer.innerHTML = '';  // Alle bisherigen Dots entfernen
+
+    images.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel(imageElement, images, indicatorsContainer, currentIndex);
+        });
+        indicatorsContainer.appendChild(dot);
+    });
+
+    // Buttons für Bildnavigation
+    buttons[0].addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateCarousel(imageElement, images, indicatorsContainer, currentIndex);
+    });
+
+    buttons[1].addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateCarousel(imageElement, images, indicatorsContainer, currentIndex);
+    });
+}
+
+// Funktion zur Aktualisierung des Karussells und der Dots
+function updateCarousel(imageElement, images, indicatorsContainer, currentIndex) {
+    imageElement.src = images[currentIndex];
+    const dots = indicatorsContainer.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+    });
+}
+
+// Karussell für die richtige Produktseite initialisieren
+document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.product-overview-img .carousel');
+    if (carousel) {
+        const isWakeWell = document.querySelector('.product-title').textContent.includes('WakeWell');
+        const images = isWakeWell ? wakewellImages : sleepwellImages;
+        initializeCarousel(carousel, images);
+    }
+});
+
+// Funktion zur Berechnung und Anzeige des Gesamtpreises
+function updateTotalPrice() {
+    const basePrice = parseFloat(document.getElementById("base-price").textContent.replace(/\s/g, '').replace(',', '.'));
+    const totalPriceElement = document.getElementById("total-price");
+    const monthlyInstallmentElement = document.getElementById("monthly-installment");
+    const months = 24;
+
+    let totalPrice = basePrice;
+
+    document.querySelectorAll('input[name="add-ons"]:checked').forEach(checkbox => {
+        totalPrice += parseFloat(checkbox.value);
+    });
+
+    totalPriceElement.textContent = totalPrice.toFixed(2).replace('.', ',') + ' €';
+
+    const monthlyInstallment = (totalPrice / months) * 1.2;
+    monthlyInstallmentElement.textContent = monthlyInstallment.toFixed(2).replace('.', ',');
+}
+
+// Event Listener für Preisaktualisierung bei Änderungen der Zusatzoptionen
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('input[name="add-ons"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateTotalPrice);
+    });
+});

@@ -289,13 +289,15 @@ a:hover{
     width: 100%;
     height: 60vh;
     margin-bottom: 2em;
+    overflow: hidden; /* überschüssigen Bildbereich ausblenden */
 }
 .carousel img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     border-radius: 10px;
-    display: none;
+    object-fit: cover; /* schneidet das Bild zu, ohne es zu verzerren */
+    object-position: center; /* Bildmittelpunkt für den Schnitt */
+
 }
 .carousel img.active {
     display: block;
