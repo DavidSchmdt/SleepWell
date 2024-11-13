@@ -2,74 +2,36 @@
     let originalPosition = { x: 0, y: 0 };
 
     document.addEventListener("DOMContentLoaded", function() {
-        // Store the original position of the button once the document is loaded
-        const button = document.getElementById('buyButton');
+        // Speichere die ursprüngliche Position des Buttons, wenn das Dokument geladen wurde
+        const button = document.getElementById('prepurchase');
         originalPosition.x = button.offsetLeft;
         originalPosition.y = button.offsetTop;
     });
 
     function moveButton() {
-        // Move button and change text temporarily
-        const button = document.getElementById('buyButton');
+        // Button bewegt sich und ändert den Text für eine gewisse Zeit
+        const button = document.getElementById('prepurchase');
         button.innerText = "Drück mich nicht!";
         const randomOffsetX = Math.floor(Math.random() * 300) - 150;
         const randomOffsetY = Math.floor(Math.random() * 300) - 150;
         button.style.transform = `translate(${randomOffsetX}px, ${randomOffsetY}px)`;
         setTimeout(() => {
-            // Return button to original position and reset text
+            // Button kehrt nach 3 Sekunden zurück zur Originalposition und ändert den Text zurück
             button.style.transform = "translate(0, 0)";
             button.innerText = "Jetzt SleepWell™ kaufen";
         }, 3000);
     }
 
-    // Carousel functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const sleepwellImages = [
-            "../images/WakeWell/WakewellClean1.png",
-            "../images/WakeWell/WakewellClean2.png",
-            "../images/WakeWell/WakewellClean3.png",
-            "../images/WakeWell/WakewellClean4.png"
-        ];
-
-        let currentIndex = 0;
-
-        function initializeCarousel(carouselElement, images) {
-            const imageElement = carouselElement.querySelector('img');
-            const buttons = carouselElement.querySelectorAll('.carousel-controls button');
-
-            // Set initial image
-            imageElement.src = images[currentIndex];
-            imageElement.classList.add('active');
-
-            // Add event listeners to control buttons
-            buttons[0].addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                updateCarousel(imageElement, images);
-            });
-
-            buttons[1].addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % images.length;
-                updateCarousel(imageElement, images);
-            });
-        }
-
-        function updateCarousel(imageElement, images) {
-            imageElement.src = images[currentIndex];
-        }
-
-        // Initialize carousel for SleepWell product
-        const sleepwellCarousel = document.querySelector('.product-overview-img .carousel');
-        initializeCarousel(sleepwellCarousel, sleepwellImages);
-    });
 
     // dots
     document.addEventListener('DOMContentLoaded', function() {
     const sleepwellImages = [
-            "../images/WakeWell/WakewellClean1.png",
-            "../images/WakeWell/WakewellClean2.png",
-            "../images/WakeWell/WakewellClean3.png",
-            "../images/WakeWell/WakewellClean4.png"
-        ];
+        "../images/SleepWell/SleepwellClean1.png",
+        "../images/SleepWell/SleepwellClean2.png",
+        "../images/SleepWell/SleepwellClean3.png",
+        "../images/SleepWell/SleepwellClean4.png",
+        "../images/SleepWell/SleepwellClean5.png"
+    ];
 
     let currentIndex = 0;
 
@@ -119,12 +81,12 @@
     const sleepwellCarousel = document.querySelector('.product-overview-img .carousel');
     initializeCarousel(sleepwellCarousel, sleepwellImages);
 });
-
 </script>
 
 <body class="page-body">
-
-<!-- Produktübersicht -->
+<section class="product-overview">
+    <!-- Product Image -->
+    <!-- Produktübersicht -->
 <section class="product-overview">
     <!-- Produktbild -->
     <div class="product-overview-img">
@@ -137,7 +99,6 @@
             </div>
         </div>
     </div>
-
     <!-- Product Details -->
     <div class="product-details">
         <h1 class="product-title">WakeWell™</h1>
