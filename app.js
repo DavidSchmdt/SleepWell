@@ -69,3 +69,44 @@ app.listen(PORT, () => {
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
+
+
+app.get('/faq', (req, res) => {
+    const faqs = [
+        { question: "Wie kann ich mein Passwort ändern?", answer: "Gehen Sie zu den Einstellungen und klicken Sie auf Passwort ändern." },
+        { question: "Was ist die Rückgaberichtlinie?", answer: "Sie können Produkte innerhalb von 30 Tagen zurückgeben." },
+        { question: "Wie kann ich meinen Account löschen?", answer: "Kontaktieren Sie unseren Kundenservice für Unterstützung bei der Löschung." }
+    ];
+    
+    // Übergibt `faqs` und `title` an die Template-Engine
+    res.render('faq', { 
+        faqs: faqs,
+        title: 'FAQ - Häufige Fragen' // Titel für die Seite festlegen
+    });
+});
+
+// Beispiel-Daten für Rezensionen
+let reviews = [
+    { title: "Fantastisches Produkt!", author: "Lisa M.", text: "Ich schlafe viel besser seit ich SleepWell nutze.", rating: 5 },
+    { title: "Zufrieden", author: "Tom H.", text: "Guter Service und gute Produkte.", rating: 4 }
+];
+
+// Route zum Anzeigen der Rezensionen
+app.get('/reviews', (req, res) => {
+    res.render('reviews', { 
+        title: 'Rezensionen - SleepWell™', 
+        reviews: reviews 
+    });
+});
+
+// Route zum Hinzufügen einer neuen Rezension
+app.post('/reviews', (req, res) => {
+    const newReview = {
+        title: req.body.title,
+        author: req.body.author,
+        text: req.body.text,
+        rating: req.body.rating
+    };
+    reviews.push(newReview);
+    res.redirect('/reviews');
+});

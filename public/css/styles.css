@@ -626,3 +626,116 @@ footer input, footer button {
 .carousel-indicators .dot.active {
     background-color: #ffffff; /* Solid white color for active dot */
 }
+
+/* FAQ */
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-bubble {
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 75%;
+    line-height: 1.6;
+}
+
+.question {
+    background-color: #01a8c9 ;
+    color: #fff;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.answer {
+    background-color: #e1e1e1;
+    color: #333;
+    align-self: flex-end;
+    text-align: left;
+}
+
+.faq-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0; /* Dünne graue Linie */
+    margin: 10px 0; /* Abstand ober- und unterhalb der Linie */
+    width: 100%; /* Stellt sicher, dass die Linie die gesamte Breite der Section nutzt */
+}
+
+
+.reviews-section {
+    margin-top: 20px;
+}
+
+.review {
+    padding: 15px 0;
+}
+
+.review-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.review-author, .review-text, .review-rating {
+    color: #555;
+    margin: 5px 0;
+}
+
+.review-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 15px 0;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.filled-star {
+    color: #FFD700; /* Goldfarbe für gefüllte Sterne */
+}
+
+.empty-star {
+    color: #ddd; /* Graue Farbe für leere Sterne */
+}
+
+.review-form-container {
+    margin-top: 30px;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+input[type="text"], textarea, select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.star-rating {
+    display: inline-flex;
+    gap: 5px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.star {
+    color: #ddd; /* Inaktive Sterne */
+    transition: color 0.3s ease;
+}
+
+.star.selected {
+    color: #FFD700; /* Goldfarbe für ausgewählte Sterne */
+}
+
+.star.hover {
+    color: #ffe597; /* Helleres Gold für Hover-Sterne */
+}

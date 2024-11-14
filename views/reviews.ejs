@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezensionen - SleepWell™</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/script.js"></script>
+</head>
+<body class="page-body">
+    <div class="main-container">
+        <h1 class="heading-primary">Rezensionen - SleepWell™</h1>
+
+        <p class="text-paragraph intro">
+            Lesen Sie die Erfahrungen unserer Kunden und teilen Sie Ihre eigenen! Ihre Meinung ist uns wichtig, um unsere Produkte und unseren Service ständig zu verbessern.
+        </p>
+
+        <!-- Anzeige der bestehenden Rezensionen -->
+        <div class="reviews-section">
+            <% reviews.forEach(function(review) { %>
+                <div class="review">
+                    <h3 class="review-title"><%= review.title %></h3>
+                    <p class="review-author">Verfasst von: <%= review.author %></p>
+                    <p class="review-text"><%= review.text %></p>
+                    <p class="review-rating">
+                        Bewertung:
+                        <span class="stars">
+                            <% for (let i = 0; i < 5; i++) { %>
+                                <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
+                            <% } %>
+                        </span>
+                        (<%= review.rating %> / 5)
+                    </p>
+                </div>
+                <hr class="review-divider">
+            <% }); %>
+        </div>
+
+        <!-- Formular für neue Rezensionen -->
+        <div class="review-form-container">
+            <h2>Ihre Rezension hinzufügen</h2>
+            <form action="/reviews" method="POST" class="review-form">
+                <label for="title">Titel:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="author">Ihr Name:</label>
+                <input type="text" id="author" name="author" required>
+
+                <label for="product">Produkt:</label>
+                <select id="product" name="product" required>
+                    <option value="SleepWell™">SleepWell™</option>
+                    <option value="WakeWell™">WakeWell™</option>
+                    <option value="DreamSync™">DreamSync™ Combo + App</option>
+                </select>
+
+                <label for="rating">Bewertung:</label>
+
+                <div class="star-rating">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <!-- Verstecktes Eingabefeld für die Bewertung -->
+                <input type="hidden" id="rating" name="rating" required>
+
+
+                <label for="text">Ihre Rezension:</label>
+                <textarea id="text" name="text" rows="4" required></textarea>
+
+                <button type="submit" class="cta-button" style="margin: 0px">Rezension absenden</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

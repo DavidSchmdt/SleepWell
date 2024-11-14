@@ -1,7 +1,6 @@
 {
   "name": "sleepwell",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
@@ -11,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-ejs-layouts": "^2.5.1"
@@ -20,5 +20,6 @@
   },
   "engines": {
     "node": "14.x"
-  }
+  },
+  "description": ""
 }

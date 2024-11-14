@@ -1,0 +1,37 @@
+<script src="../js/script.js"></script>
+<html>
+<body class="page-body">
+    <div class="main-container">
+        <h1 class="heading-primary">FAQ - SleepWell™</h1>
+        
+        <p class="text-paragraph intro">
+            Willkommen bei unseren häufig gestellten Fragen! Hier finden Sie Antworten auf die wichtigsten Fragen rund um unsere Produkte und unseren Service. Falls Sie Ihre Frage hier nicht finden, zögern Sie nicht, uns direkt zu kontaktieren.
+        </p>
+
+        <a href="/contact" class="cta-button" style="
+        background-color: #ff9f1c ; margin-left: 0px; border-radius: 10px;
+        ">Frage stellen</a>
+
+        
+        
+        <div class="faq-section">
+            <% faqs.forEach(function(faq) { %>
+                <div class="faq-bubble question">
+                    <p><%= faq.question %></p>
+                </div>
+                <div class="faq-bubble answer">
+                    <p><%= faq.answer %></p>
+                </div>
+                <div class="faq-divider"></div>
+            <% }); %>
+            
+            </div>
+        
+        
+
+        <p class="text-paragraph outro">
+            Haben Sie noch weitere Fragen oder Anregungen? Unser Team freut sich, von Ihnen zu hören. Nutzen Sie den obigen Button, um uns Ihre Fragen mitzuteilen, oder besuchen Sie die <a href="/contact">Kontaktseite</a>.
+        </p>
+    </div>
+</body>
+</html>

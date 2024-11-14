@@ -120,3 +120,46 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.addEventListener('change', updateTotalPrice);
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const questions = document.querySelectorAll(".faq-bubble.question");
+
+    questions.forEach((question, index) => {
+        question.addEventListener("click", () => {
+            const answer = document.querySelectorAll(".faq-bubble.answer")[index];
+            answer.classList.toggle("active");
+        });
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const stars = document.querySelectorAll(".star-rating .star");
+    const ratingInput = document.getElementById("rating");
+
+    stars.forEach((star, index) => {
+        // Beim Klicken auf einen Stern
+        star.addEventListener("click", () => {
+            const value = index + 1; // Wert ist der Index + 1, da Index bei 0 beginnt
+            ratingInput.value = value;
+
+            // Entferne alle ausgewählten Klassen und füge sie dann bis zum geklickten Stern hinzu
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add("selected");
+            }
+        });
+
+        // Beim Hover über einen Stern
+        star.addEventListener("mouseover", () => {
+            // Entferne alle Hover-Klassen und füge sie dann bis zum aktuellen Stern hinzu
+            stars.forEach(s => s.classList.remove("hover"));
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add("hover");
+            }
+        });
+
+        // Beim Verlassen des Sternbereichs werden alle Hover-Klassen entfernt
+        star.addEventListener("mouseout", () => {
+            stars.forEach(s => s.classList.remove("hover"));
+        });
+    });
+});
