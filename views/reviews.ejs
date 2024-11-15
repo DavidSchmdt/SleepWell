@@ -1,48 +1,26 @@
-<h1>Debugging</h1>
-<p>Title: <%= title %></p>
-<p>Reviews vorhanden: <% if (reviews && reviews.length > 0) { %> Ja <% } else { %> Nein <% } %></p>
-<p>Reviews-Daten:</p>
-<pre><%= JSON.stringify(reviews, null, 2) %></pre>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Rezensionen' %></title>
+</head>
+<body>
+    <h1><%= title || 'Rezensionen' %></h1>
 
-
-
- <!-- Formular für neue Rezensionen -->
- <div class="review-form-container">
-    <h2>Ihre Rezension hinzufügen</h2>
-    <form action="/reviews" method="POST" class="review-form">
-        <label for="title">Titel:</label>
-        <input type="text" id="title" name="title" required>
-
-        <label for="author">Ihr Name:</label>
-        <input type="text" id="author" name="author" required>
-
-        <label for="product">Produkt:</label>
-        <select id="product" name="product" required>
-            <option value="SleepWell™">SleepWell™</option>
-            <option value="WakeWell™">WakeWell™</option>
-            <option value="DreamSync™">DreamSync™ Combo + App</option>
-        </select>
-
-        <label for="rating">Bewertung:</label>
-
-        <div class="star-rating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <!-- Verstecktes Eingabefeld für die Bewertung -->
-        <input type="hidden" id="rating" name="rating" required>
-
-
-        <label for="text">Ihre Rezension:</label>
-        <textarea id="text" name="text" rows="4" required></textarea>
-
-        <button type="submit" class="cta-button" style="margin: 0px">Rezension absenden</button>
-        
-        
-    </form>
-</div>
+    <% if (reviews && reviews.length > 0) { %>
+        <% reviews.forEach(review => { %>
+            <div>
+                <h2><%= review.title || 'Kein Titel' %></h2>
+                <p>Autor: <%= review.author || 'Unbekannt' %></p>
+                <p>Bewertung: <%= review.rating || 0 %> Sterne</p>
+                <p>Produkt: <%= review.product || 'Nicht angegeben' %></p>
+                <p><%= review.text || 'Keine Beschreibung verfügbar' %></p>
+            </div>
+            <hr>
+        <% }); %>
+    <% } else { %>
+        <p>Keine Rezensionen gefunden.</p>
+    <% } %>
 </body>
 </html>
