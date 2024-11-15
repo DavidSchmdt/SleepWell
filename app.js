@@ -117,9 +117,27 @@ app.use((err, req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Willkommen bei SleepWell™' });
+app.get('/', async (req, res) => {
+    try {
+        // Filtere alle Bewertungen mit 4 oder mehr Sternen
+        const allReviews = await Review.find({ rating: { $gte: 4 } });
+
+        // Mischen Sie die Bewertungen und holen Sie drei zufällige
+        const shuffledReviews = allReviews.sort(() => 0.5 - Math.random());
+        const topReviews = shuffledReviews.slice(0, 3); // Wählt die ersten 3 nach dem Mischen
+
+        res.render('index', {
+            title: 'Willkommen bei SleepWell™',
+            topReviews, // Übergibt die zufälligen Rezensionen an das Template
+        });
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Rezensionen:', err.message);
+        res.status(500).send('Serverfehler');
+    }
 });
+
+
+
 
 app.get('/product', (req, res) => {
     res.render('product', { title: 'SleepWell™ Bett - Dein Schlüssel zu erholsamem Schlaf' });
@@ -336,4 +354,43 @@ app.use((err, req, res, next) => {
     console.error("Globaler Fehler:", err.stack);
     res.status(500).send("Ein interner Serverfehler ist aufgetreten.");
 });
+
+app.get('/api/sleepwell-rating', async (req, res) => {
+    try {
+        // Filtere alle Rezensionen für SleepWell™
+        const reviews = await Review.find({ product: "SleepWell™" });
+
+        // Berechnung der durchschnittlichen Bewertung
+        const totalReviews = reviews.length;
+        const averageRating = totalReviews > 0
+            ? reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+            : 0;
+
+        // Rückgabe von Durchschnittsbewertung und Anzahl der Bewertungen
+        res.json({ averageRating: averageRating.toFixed(1), totalReviews });
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Bewertung:', err.message);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Bewertung' });
+    }
+});
+
+app.get('/api/wakewell-rating', async (req, res) => {
+    try {
+        // Filtere alle Bewertungen für WakeWell™
+        const reviews = await Review.find({ product: "WakeWell™" });
+
+        // Berechnung der durchschnittlichen Bewertung
+        const totalReviews = reviews.length;
+        const averageRating = totalReviews > 0
+            ? reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+            : 0;
+
+        // Rückgabe von Durchschnittsbewertung und Anzahl der Bewertungen
+        res.json({ averageRating: averageRating.toFixed(1), totalReviews });
+    } catch (err) {
+        console.error('Fehler beim Abrufen der WakeWell-Bewertung:', err.message);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Bewertung' });
+    }
+});
+
 

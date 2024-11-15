@@ -923,3 +923,27 @@ input[type="text"], textarea, select {
 .filter-form .filter-section {
     margin-bottom: 15px;
 }
+
+.product-rating {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1em;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.product-rating a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#sleepwell-stars, #wakewell-stars, #dreamsync-stars {
+    font-size: 1.2em;
+    color: #FFD700; /* Goldfarbe für Sterne */
+}
+
+#sleepwell-rating-text, #wakewell-rating-text, #dreamsync-rating-text {
+    color: #333;
+    font-weight: bold;
+}

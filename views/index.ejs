@@ -92,21 +92,32 @@
     <section class="content-section" id="kundenmeinungen">
         <h2>Was unsere Kunden sagen</h2>
         <div class="features-grid">
-            <div class="feature-card">
-                <p>„Seitdem ich SleepWell™ benutze, schlafe ich besser als je zuvor. Es fühlt sich an, als würde ich in einer Wolke liegen.“</p>
-                <strong>- Anna S.</strong>
-            </div>
-            <div class="feature-card">
-                <p>„Die personalisierte Massagefunktion ist genial. Ich wache jeden Morgen voller Energie auf.“</p>
-                <strong>- Markus L.</strong>
-            </div>
-            <div class="feature-card">
-                <p>„Einfach das beste Bett, das ich je hatte. DynamicTemp™ sorgt immer für die perfekte Temperatur.“</p>
-                <strong>- Clara W.</strong>
-            </div>
+            <% if (topReviews && topReviews.length > 0) { %>
+                <% topReviews.forEach(review => { %>
+                    
+                    <div class="feature-card">
+                        <p class="review-rating">
+                            
+                            <span class="stars">
+                                <% for (let i = 0; i < 5; i++) { %>
+                                    <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
+                                <% } %>
+                            </span>
+                        </p>
+                        <h3 class="review-title"><%= review.title || 'Kein Titel' %></h3>
+                        
+                        <p><%= review.text || 'Keine Beschreibung verfügbar' %></p>
+                        <strong>- <%= review.author || 'Anonym' %></strong>
+                        
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>Es gibt noch keine Bewertungen mit 5 Sternen.</p>
+            <% } %>
         </div>
     </section>
-
+    
+        
     <section class="hero" class="parallax" style="background-image: url('../images/wakewell/1.png');">
         <div class="hero-text">
             <h1 style = "color: #ff9f1c">Mit WakeWell™ für den Perfekten Morgen</h1>

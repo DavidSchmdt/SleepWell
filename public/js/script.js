@@ -313,3 +313,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const averageStarsElement = document.getElementById("average-stars");
+    const averageRatingTextElement = document.getElementById("average-rating-text");
+
+    fetch('/api/sleepwell-rating')
+        .then(response => response.json())
+        .then(data => {
+            const { averageRating, totalReviews } = data;
+
+            // Sterne-Visualisierung
+            const stars = Array(5).fill("★").map((star, index) => 
+                index < Math.round(averageRating) ? `<span style="color: #FFD700;">★</span>` : `<span style="color: #ddd;">★</span>`
+            ).join('');
+            averageStarsElement.innerHTML = stars;
+
+            // Bewertungstext anzeigen
+            averageRatingTextElement.textContent = `Durchschnitt: ${averageRating}/5 (${totalReviews} Bewertungen)`;
+        })
+        .catch(err => {
+            console.error("Fehler beim Abrufen der Bewertung:", err);
+            averageRatingTextElement.textContent = "Fehler beim Laden der Bewertung.";
+        });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const wakewellStarsElement = document.getElementById("wakewell-stars");
+    const wakewellRatingTextElement = document.getElementById("wakewell-rating-text");
+
+    fetch('/api/wakewell-rating')
+        .then(response => response.json())
+        .then(data => {
+            const { averageRating, totalReviews } = data;
+
+            // Sterne-Visualisierung
+            const stars = Array(5).fill("★").map((star, index) => 
+                index < Math.round(averageRating) ? `<span style="color: #FFD700;">★</span>` : `<span style="color: #ddd;">★</span>`
+            ).join('');
+            wakewellStarsElement.innerHTML = stars;
+
+            // Bewertungstext anzeigen
+            wakewellRatingTextElement.textContent = `Durchschnitt: ${averageRating}/5 (${totalReviews} Bewertungen)`;
+        })
+        .catch(err => {
+            console.error("Fehler beim Abrufen der Bewertung:", err);
+            wakewellRatingTextElement.textContent = "Fehler beim Laden der Bewertung.";
+        });
+});
+
+
