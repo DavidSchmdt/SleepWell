@@ -10,6 +10,7 @@ const Review = require('./models/Review');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 // Configure Express to use EJS and express-ejs-layouts
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
@@ -41,10 +42,64 @@ mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB erfolgreich verbunden'))
+.then(async () => {
+    console.log('MongoDB erfolgreich verbunden');
+
+    // Prüfen, ob bereits Daten vorhanden sind
+    const existingReviews = await Review.countDocuments();
+    if (existingReviews === 0) {
+        await Review.create([
+            {
+                title: "Fantastisches Produkt!",
+                author: "Lisa M.",
+                text: "Ich schlafe viel besser seit ich SleepWell™ nutze.",
+                rating: 5,
+                product: "SleepWell™"
+            },
+            {
+                title: "Zufrieden",
+                author: "Tom H.",
+                text: "Guter Service und gute Produkte.",
+                rating: 4,
+                product: "WakeWell™"
+            }
+        ]);
+        console.log("Dummy-Daten erfolgreich hinzugefügt");
+    }
+})
 .catch(err => {
     console.error('MongoDB-Verbindungsfehler:', err.message);
-    process.exit(1); // Beenden Sie die App bei Verbindungsfehlern
+    process.exit(1);
+});
+
+app.get('/seed-reviews', async (req, res) => {
+    try {
+        const existingReviews = await Review.countDocuments();
+        if (existingReviews > 0) {
+            return res.status(400).send("Die Datenbank enthält bereits Rezensionen. Keine Dummy-Daten hinzugefügt.");
+        }
+
+        await Review.create([
+            {
+                title: "Fantastisches Produkt!",
+                author: "Lisa M.",
+                text: "Ich schlafe viel besser seit ich SleepWell™ nutze.",
+                rating: 5,
+                product: "SleepWell™"
+            },
+            {
+                title: "Zufrieden",
+                author: "Tom H.",
+                text: "Guter Service und gute Produkte.",
+                rating: 4,
+                product: "WakeWell™"
+            }
+        ]);
+        res.status(200).send("Dummy-Daten erfolgreich hinzugefügt");
+    } catch (err) {
+        console.error("Fehler beim Hinzufügen von Dummy-Daten:", err.message);
+        res.status(500).send("Fehler beim Hinzufügen von Dummy-Daten");
+    }
 });
 
 
@@ -176,31 +231,19 @@ app.get('/reviews', async (req, res) => {
 
         console.log("Empfangene Query-Parameter:", req.query);
 
-        // MongoDB-Verbindung prüfen
-        if (mongoose.connection.readyState !== 1) {
-            throw new Error("Datenbank nicht verbunden");
-        }
-
-        // Query aufbauen
+        // Query-Aufbau
         const query = {};
         if (product) query.product = product;
-        if (minRating) {
-            const minRatingValue = parseInt(minRating);
-            if (isNaN(minRatingValue)) {
-                throw new Error("Ungültiger Wert für minRating");
-            }
-            query.rating = { $gte: minRatingValue };
-        }
+        if (minRating) query.rating = { $gte: parseInt(minRating) };
         if (author) query.author = { $regex: new RegExp(author, 'i') };
 
-        console.log("Datenbankabfrage:", query);
+        console.log("MongoDB Query:", query);
 
-        // Datenbankabfrage ausführen
+        // Datenbankabfrage
         const reviews = await Review.find(query).sort({ createdAt: -1 });
+        console.log("Gefundene Reviews:", reviews);
 
-        console.log("Gefundene Rezensionen:", reviews);
-
-        // Template rendern
+        // Rendering
         res.render('reviews', {
             title: `Rezensionen - ${product || 'Alle Produkte'}`,
             reviews,
@@ -210,10 +253,11 @@ app.get('/reviews', async (req, res) => {
             success: success === 'true'
         });
     } catch (err) {
-        console.error("Fehler in der /reviews-Route:", err.message);
-        res.status(500).send(`Serverfehler: ${err.message}`);
+        console.error("Fehler in der /reviews-Route:", err.stack);
+        res.status(500).send("Serverfehler: " + err.message);
     }
 });
+
 
 app.get('/reviews', async (req, res) => {
     try {
