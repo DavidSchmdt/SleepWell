@@ -1,4 +1,4 @@
-require('dotenv').config(); // Laden der Umgebungsvariablen
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -15,6 +15,15 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layout');
+
+require('dotenv').config();
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB erfolgreich verbunden'))
+.catch(err => console.error('MongoDB-Verbindungsfehler:', err));
 
 
 // Middleware
@@ -158,45 +167,44 @@ app.get('/reviews', async (req, res) => {
     try {
         const { product, minRating, author, success } = req.query;
 
-        // Basisabfrage
+        console.log("Empfangene Query-Parameter:", req.query);
+
+        // MongoDB-Verbindung prüfen
+        if (mongoose.connection.readyState !== 1) {
+            throw new Error("Datenbank nicht verbunden");
+        }
+
+        // Query aufbauen
         const query = {};
-
-        // Filter nach Produkt
-        if (product) {
-            query.product = product;
-        }
-
-        // Filter nach minimaler Bewertung
+        if (product) query.product = product;
         if (minRating) {
-            query.rating = { $gte: parseInt(minRating) };
+            const minRatingValue = parseInt(minRating);
+            if (isNaN(minRatingValue)) {
+                throw new Error("Ungültiger Wert für minRating");
+            }
+            query.rating = { $gte: minRatingValue };
         }
+        if (author) query.author = { $regex: new RegExp(author, 'i') };
 
-        // Filter nach Autor
-        if (author) {
-            query.author = { $regex: new RegExp(author, 'i') }; // Unscharfe Suche (case-insensitive)
-        }
+        console.log("Datenbankabfrage:", query);
 
-        // Datenbankabfrage mit den Filtern
+        // Datenbankabfrage ausführen
         const reviews = await Review.find(query).sort({ createdAt: -1 });
 
-        // Erfolgsmeldung weiterleiten
+        console.log("Gefundene Rezensionen:", reviews);
+
+        // Template rendern
         res.render('reviews', {
             title: `Rezensionen - ${product || 'Alle Produkte'}`,
             reviews,
             product,
             minRating,
             author,
-            success: success === 'true' // Erfolgsmeldung nur, wenn `success=true` in Query-Params
+            success: success === 'true'
         });
     } catch (err) {
-        console.error(err); // Protokolliert den Fehler in der Konsole
-        res.status(500).send("Serverfehler");
-        console.log("Empfangene Query-Parameter:", req.query);
-        console.log("Datenbankabfrage:", query);
-        if (!mongoose.connection.readyState) {
-            throw new Error("Keine Verbindung zur Datenbank");
-        }
-        
+        console.error("Fehler in der /reviews-Route:", err.message);
+        res.status(500).send(`Serverfehler: ${err.message}`);
     }
 });
 
@@ -290,5 +298,11 @@ app.post('/reviews/delete/:id', async (req, res) => {
         console.error(err);
         res.status(500).send("Serverfehler");
     }
+});
+
+
+app.use((err, req, res, next) => {
+    console.error("Globaler Fehler:", err.stack);
+    res.status(500).send("Ein interner Serverfehler ist aufgetreten.");
 });
 
