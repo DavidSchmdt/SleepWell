@@ -197,7 +197,6 @@ app.get('/reviews', async (req, res) => {
     }
 });
 
-
 app.get('/reviews', async (req, res) => {
     try {
         const { product, minRating, author, success } = req.query;
@@ -205,7 +204,6 @@ app.get('/reviews', async (req, res) => {
         console.log("Empfangene Query-Parameter:", req.query);
 
         const query = {};
-
         if (product) query.product = product;
         if (minRating) {
             if (isNaN(parseInt(minRating))) {
@@ -219,7 +217,7 @@ app.get('/reviews', async (req, res) => {
 
         const reviews = await Review.find(query).sort({ createdAt: -1 });
 
-        console.log("Gefundene Rezensionen:", reviews);
+        console.log("Gefundene Reviews:", reviews);
 
         res.render('reviews', {
             title: `Rezensionen - ${product || 'Alle Produkte'}`,
@@ -231,7 +229,7 @@ app.get('/reviews', async (req, res) => {
         });
     } catch (err) {
         console.error("Fehler in der /reviews-Route:", err.message);
-        res.status(500).send("Serverfehler");
+        res.status(500).send("Fehler bei der Verarbeitung der Anfrage");
     }
 });
 
