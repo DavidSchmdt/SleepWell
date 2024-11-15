@@ -402,3 +402,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const newsletterForm = document.getElementById("newsletter-form");
+    const messageElement = document.getElementById("newsletter-message");
+
+    newsletterForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(newsletterForm);
+        const data = Object.fromEntries(formData);
+
+        try {
+            const response = await fetch("/newsletter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                messageElement.textContent = "Vielen Dank für Ihre Anmeldung!";
+                messageElement.style.color = "green";
+                newsletterForm.reset();
+            } else {
+                const error = await response.json();
+                messageElement.textContent = error.error || "Fehler bei der Anmeldung.";
+                messageElement.style.color = "red";
+            }
+        } catch (err) {
+            console.error("Fehler beim Senden des Formulars:", err);
+            messageElement.textContent = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.";
+            messageElement.style.color = "red";
+        }
+    });
+});

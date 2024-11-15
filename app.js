@@ -72,6 +72,8 @@ mongoose.connect(MONGODB_URI, {
     process.exit(1);
 });
 
+
+
 app.get('/seed-reviews', async (req, res) => {
     try {
         const existingReviews = await Review.countDocuments();
@@ -392,3 +394,32 @@ app.get('/api/wakewell-rating', async (req, res) => {
         res.status(500).json({ error: 'Fehler beim Abrufen der Bewertung' });
     }
 });
+
+const Subscriber = require('./models/Subscriber');
+
+// Newsletter-Anmeldung
+app.post('/newsletter', async (req, res) => {
+    const { email, name, userId } = req.body;
+
+    try {
+        if (!email) {
+            return res.status(400).json({ error: "E-Mail-Adresse ist erforderlich" });
+        }
+
+        // Überprüfen, ob die E-Mail bereits registriert ist
+        const existingSubscriber = await Subscriber.findOne({ email });
+        if (existingSubscriber) {
+            return res.status(409).json({ error: "Diese E-Mail-Adresse ist bereits registriert." });
+        }
+
+        // Neuer Abonnent speichern
+        const newSubscriber = new Subscriber({ email, name, userId });
+        await newSubscriber.save();
+
+        res.status(201).json({ message: "Anmeldung erfolgreich! Vielen Dank." });
+    } catch (err) {
+        console.error("Fehler beim Speichern des Abonnenten:", err);
+        res.status(500).json({ error: "Interner Serverfehler" });
+    }
+});
+
