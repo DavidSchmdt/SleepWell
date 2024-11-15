@@ -361,5 +361,44 @@ document.addEventListener("DOMContentLoaded", () => {
             wakewellRatingTextElement.textContent = "Fehler beim Laden der Bewertung.";
         });
 });
+/*
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleDarkMode = document.getElementById("dark-mode-toggle");
 
+    // Funktion zum Anwenden des Modus
+    const applyMode = (mode) => {
+        document.documentElement.classList.toggle("dark-mode", mode === "dark");
+    };
+
+    // Browser-Präferenz erkennen
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // Benutzerpräferenz aus localStorage
+    const userPreference = localStorage.getItem("theme");
+
+    // Wenn der Benutzer eine Präferenz gespeichert hat, verwenden wir diese
+    if (userPreference) {
+        applyMode(userPreference);
+    } else {
+        // Andernfalls verwenden wir die Browser-Präferenz
+        applyMode(prefersDarkScheme.matches ? "dark" : "light");
+    }
+
+    // Event-Listener für Umschalt-Button
+    toggleDarkMode.addEventListener("click", () => {
+        const currentMode = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
+        const newMode = currentMode === "dark" ? "light" : "dark";
+
+        applyMode(newMode);
+        localStorage.setItem("theme", newMode); // Speichern der Benutzerpräferenz
+    });
+
+    // Event-Listener für Änderungen der Browser-Präferenz
+    prefersDarkScheme.addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+            applyMode(e.matches ? "dark" : "light");
+        }
+    });
+});
+*/

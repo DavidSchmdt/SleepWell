@@ -705,7 +705,7 @@ input[type="text"], textarea, select {
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 15px 15px 0;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     writing-mode: vertical-rl; /* Vertikale Schrift */
@@ -762,7 +762,7 @@ input[type="text"], textarea, select {
 }
 
 .close-filter-button:hover {
-    color: #003f53;
+    color: #ababab;
 }
 
 /* Filterformular */
@@ -947,3 +947,68 @@ input[type="text"], textarea, select {
     color: #333;
     font-weight: bold;
 }
+/*
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --heading-color: #000000;
+    --link-color: #005f73;
+    --button-color: #ff9f1c;
+    --card-background: #f9f9f9;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #121212;
+        --text-color: #e0e0e0;
+        --heading-color: #ffffff;
+        --link-color: #80cbc4;
+        --button-color: #ff9800;
+        --card-background: #1e1e1e;
+        --card-shadow: rgba(0, 0, 0, 0.5);
+    }
+}
+
+:root.dark-mode {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --link-color: #80cbc4;
+    --button-color: #ff9800;
+    --card-background: #1e1e1e;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3 {
+    color: var(--heading-color);
+}
+
+a {
+    color: var(--link-color);
+    transition: color 0.3s ease;
+}
+
+button {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.feature-card {
+    background-color: var(--card-background);
+    box-shadow: 0 4px 8px var(--card-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+*/

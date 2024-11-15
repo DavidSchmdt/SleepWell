@@ -392,5 +392,3 @@ app.get('/api/wakewell-rating', async (req, res) => {
         res.status(500).json({ error: 'Fehler beim Abrufen der Bewertung' });
     }
 });
-
-
