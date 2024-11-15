@@ -149,47 +149,36 @@ app.get('/faq', (req, res) => {
     });
 });
 
-// Beispiel-Daten für Rezensionen mit Produktbezug
-let reviews = [
-    { 
-        title: "Fantastisches Produkt!", 
-        author: "Lisa M.", 
-        text: "Ich schlafe viel besser seit ich SleepWell™ nutze.", 
-        rating: 5,
-        product: "SleepWell™"
-    },
-    { 
-        title: "Zufrieden", 
-        author: "Tom H.", 
-        text: "Guter Service und gute Produkte.", 
-        rating: 5,
-        product: "WakeWell™"
-    }
-];
 
 // Route zum Anzeigen der Rezensionen
 app.get('/reviews', async (req, res) => {
     try {
         const { product, minRating, author, success } = req.query;
+
         // Basisabfrage
         const query = {};
+
         // Filter nach Produkt
         if (product) {
             query.product = product;
         }
+
         // Filter nach minimaler Bewertung
         if (minRating) {
             query.rating = { $gte: parseInt(minRating) };
         }
+
         // Filter nach Autor
         if (author) {
             query.author = { $regex: new RegExp(author, 'i') }; // Unscharfe Suche (case-insensitive)
         }
+
         // Datenbankabfrage mit den Filtern
         const reviews = await Review.find(query).sort({ createdAt: -1 });
+
         // Erfolgsmeldung weiterleiten
-        res.render('reviews', { 
-            title: `Rezensionen - ${product || 'Alle Produkte'}`, 
+        res.render('reviews', {
+            title: `Rezensionen - ${product || 'Alle Produkte'}`,
             reviews,
             product,
             minRating,
@@ -197,38 +186,54 @@ app.get('/reviews', async (req, res) => {
             success: success === 'true' // Erfolgsmeldung nur, wenn `success=true` in Query-Params
         });
     } catch (err) {
-        console.error(err);
+        console.error(err); // Protokolliert den Fehler in der Konsole
+        res.status(500).send("Serverfehler");
+        console.log("Empfangene Query-Parameter:", req.query);
+        console.log("Datenbankabfrage:", query);
+        if (!mongoose.connection.readyState) {
+            throw new Error("Keine Verbindung zur Datenbank");
+        }
+        
+    }
+});
+
+
+app.get('/reviews', async (req, res) => {
+    try {
+        const { product, minRating, author, success } = req.query;
+
+        console.log("Empfangene Query-Parameter:", req.query);
+
+        const query = {};
+
+        if (product) query.product = product;
+        if (minRating) {
+            if (isNaN(parseInt(minRating))) {
+                throw new Error("Ungültiger Wert für minRating");
+            }
+            query.rating = { $gte: parseInt(minRating) };
+        }
+        if (author) query.author = { $regex: new RegExp(author, 'i') };
+
+        console.log("Datenbankabfrage:", query);
+
+        const reviews = await Review.find(query).sort({ createdAt: -1 });
+
+        console.log("Gefundene Rezensionen:", reviews);
+
+        res.render('reviews', {
+            title: `Rezensionen - ${product || 'Alle Produkte'}`,
+            reviews,
+            product,
+            minRating,
+            author,
+            success: success === 'true'
+        });
+    } catch (err) {
+        console.error("Fehler in der /reviews-Route:", err.message);
         res.status(500).send("Serverfehler");
     }
 });
-
-
-app.post('/reviews', async (req, res) => {
-    try {
-        const { title, author, text, rating, product } = req.body;
-
-        if (!title || !author || !text || !rating || !product) {
-            return res.status(400).json({ error: "Alle Felder müssen ausgefüllt sein!" });
-        }
-
-        // Überprüfung auf Duplikate
-        const existingReview = await Review.findOne({ title, author, product });
-        if (existingReview) {
-            return res.status(409).json({ error: "Eine ähnliche Rezension existiert bereits." });
-        }
-
-        // Neue Rezension speichern
-        const newReview = new Review({ title, author, text, rating, product });
-        await newReview.save();
-
-        res.status(201).json(newReview);
-    } catch (err) {
-        console.error("Fehler beim Speichern der Rezension:", err.message);
-        res.status(500).json({ error: "Fehler beim Speichern der Rezension" });
-    }
-});
-
-
 
 // Route zum Bearbeiten einer Rezension
 app.get('/reviews/edit/:id', async (req, res) => {
