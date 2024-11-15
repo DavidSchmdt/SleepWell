@@ -36,6 +36,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((err, req, res, next) => {
+    console.error('Globaler Fehler:', err.message);
+    res.status(500).send('Serverfehler');
+});
 
 // Serve static files (CSS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -113,9 +117,17 @@ app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+app.get('/health', async (req, res) => {
+    try {
+        // Testen Sie die Verbindung zu MongoDB
+        await mongoose.connection.db.admin().ping();
+        res.status(200).send('OK');
+    } catch (err) {
+        console.error('Health-Check Fehler:', err.message);
+        res.status(500).send('Health-Check fehlgeschlagen');
+    }
 });
+
 
 
 app.get('/faq', (req, res) => {
