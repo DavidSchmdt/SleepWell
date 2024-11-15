@@ -225,7 +225,7 @@ app.get('/faq', (req, res) => {
 
 
 // Route zum Anzeigen der Rezensionen
-app.get('/reviews', async (req, res) => {
+/*app.get('/reviews', async (req, res) => {
     try {
         const { product, minRating, author, success } = req.query;
 
@@ -257,7 +257,7 @@ app.get('/reviews', async (req, res) => {
         res.status(500).send("Serverfehler: " + err.message);
     }
 });
-
+*/
 
 app.get('/reviews', async (req, res) => {
     try {
@@ -310,44 +310,24 @@ app.get('/reviews', async (req, res) => {
     }
 });
 
-
-// Route zum Bearbeiten einer Rezension
-app.get('/reviews/edit/:id', async (req, res) => {
-    try {
-        const review = await Review.findById(req.params.id);
-        if (!review) {
-            return res.status(404).send("Rezension nicht gefunden");
-        }
-        res.render('editReview', { review });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Serverfehler");
-    }
-});
-
-app.post('/reviews/edit/:id', async (req, res) => {
+app.post('/reviews', async (req, res) => {
     try {
         const { title, author, text, rating, product } = req.body;
-        await Review.findByIdAndUpdate(req.params.id, { title, author, text, rating, product });
-        res.redirect('/reviews?product=' + encodeURIComponent(product));
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Serverfehler");
-    }
-});
 
-// Route zum Löschen einer Rezension
-app.post('/reviews/delete/:id', async (req, res) => {
-    try {
-        const review = await Review.findById(req.params.id);
-        if (!review) {
-            return res.status(404).send("Rezension nicht gefunden");
+        // Validierung der Eingabedaten
+        if (!title || !author || !text || !rating || !product) {
+            console.error("Ungültige Eingabedaten:", req.body);
+            return res.status(400).json({ error: "Alle Felder müssen ausgefüllt sein!" });
         }
-        await Review.findByIdAndDelete(req.params.id);
-        res.redirect('/reviews?product=' + encodeURIComponent(review.product));
+
+        // Rezension speichern
+        const newReview = new Review({ title, author, text, rating, product });
+        await newReview.save();
+
+        res.status(201).json(newReview);
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Serverfehler");
+        console.error("Fehler beim Speichern der Rezension:", err.message);
+        res.status(500).json({ error: "Fehler beim Speichern der Rezension" });
     }
 });
 
