@@ -33,12 +33,19 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // Verbindung zu MongoDB herstellen
-mongoose.connect(process.env.MONGODB_URI, {
+const MONGODB_URI = process.env.MONGODB_URI;
+
+console.log("Verbindungs-URI:", MONGODB_URI);
+
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB verbunden'))
-.catch(err => console.error('MongoDB-Verbindungsfehler:', err));
+.then(() => console.log('MongoDB erfolgreich verbunden'))
+.catch(err => {
+    console.error('MongoDB-Verbindungsfehler:', err.message);
+    process.exit(1); // Beenden Sie die App bei Verbindungsfehlern
+});
 
 
 // Middleware zum Parsen von JSON und URL-kodierten Daten
