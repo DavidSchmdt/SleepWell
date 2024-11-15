@@ -1,80 +1,123 @@
+<!-- views/reviews.ejs -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezensionen - SleepWell™</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/script.js"></script>
+    <script src="/js/script.js" defer></script>
 </head>
 <body class="page-body">
     <div class="main-container">
-        <h1 class="heading-primary">Rezensionen - SleepWell™</h1>
+        <h1 class="heading-primary">Rezensionen</h1>
 
-        <p class="text-paragraph intro">
-            Lesen Sie die Erfahrungen unserer Kunden und teilen Sie Ihre eigenen! Ihre Meinung ist uns wichtig, um unsere Produkte und unseren Service ständig zu verbessern.
-        </p>
+    
+    <!-- Popout-Tab für Filter -->
+    <div id="filter-tab" class="filter-tab">Filter</div>
 
-        <!-- Anzeige der bestehenden Rezensionen -->
-        <div class="reviews-section">
-            <% reviews.forEach(function(review) { %>
-                <div class="review">
-                    <h3 class="review-title"><%= review.title %></h3>
-                    <label for="product">Produkt: <%= review.product %></label>
-                    <p class="review-author">Verfasst von: <%= review.author %></p>
-                    <p class="review-text"><%= review.text %></p>
-                    <p class="review-rating">
-                        Bewertung:
-                        <span class="stars">
-                            <% for (let i = 0; i < 5; i++) { %>
-                                <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
-                            <% } %>
-                        </span>
-                        (<%= review.rating %> / 5)
-                    </p>
-                </div>
-                <hr class="review-divider">
-            <% }); %>
+    <!-- Popout-Menü für Filter -->
+    <div id="filter-menu" class="filter-menu">
+        <div class="filter-header">
+            <h3>Filteroptionen</h3>
+            <button id="close-filter" class="close-filter-button">×</button>
         </div>
-
-        <!-- Formular für neue Rezensionen -->
-        <div class="review-form-container">
-            <h2>Ihre Rezension hinzufügen</h2>
-            <form action="/reviews" method="POST" class="review-form">
-                <label for="title">Titel:</label>
-                <input type="text" id="title" name="title" required>
-
-                <label for="author">Ihr Name:</label>
-                <input type="text" id="author" name="author" required>
-
-                <label for="product">Produkt:</label>
-                <select id="product" name="product" required>
-                    <option value="SleepWell™">SleepWell™</option>
-                    <option value="WakeWell™">WakeWell™</option>
-                    <option value="DreamSync™">DreamSync™ Combo + App</option>
+        <form action="/reviews" method="GET" class="filter-form">
+            <div class="filter-section">
+                <label for="product">Produkt auswählen:</label>
+                <select id="product" name="product">
+                    <option value="">Alle Produkte</option>
+                    <option value="SleepWell™" <%= product === "SleepWell™" ? 'selected' : '' %>>SleepWell™</option>
+                    <option value="WakeWell™" <%= product === "WakeWell™" ? 'selected' : '' %>>WakeWell™</option>
+                    <option value="DreamSync™" <%= product === "DreamSync™" ? 'selected' : '' %>>DreamSync™</option>
+                    <option value="DreamSync™ Combo + App" <%= product === "DreamSync™ Combo + App" ? 'selected' : '' %>>DreamSync™ Combo + App</option>
                 </select>
-
-                <label for="rating">Bewertung:</label>
-
-                <div class="star-rating">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <!-- Verstecktes Eingabefeld für die Bewertung -->
-                <input type="hidden" id="rating" name="rating" required>
-
-
-                <label for="text">Ihre Rezension:</label>
-                <textarea id="text" name="text" rows="4" required></textarea>
-                <div class="disclaimer-box" style="margin: 5px 0 5px 0;">
-                    Wenn sie auf <strong>Rezension absenden</strong> drücken, akzeptieren sie die <a href="/privacy" style="color:#005f73;">Datenschutzerklärung</a>.
-                </div>
-                <button type="submit" class="cta-button" style="margin: 0px">Rezension absenden</button>
-            </form>
-        </div>
+            </div>
+            <div class="filter-section">
+                <label for="minRating">Minimale Bewertung:</label>
+                <select id="minRating" name="minRating">
+                    <option value="">Keine Auswahl</option>
+                    <option value="1" <%= minRating === "1" ? 'selected' : '' %>>1 Stern</option>
+                    <option value="2" <%= minRating === "2" ? 'selected' : '' %>>2 Sterne</option>
+                    <option value="3" <%= minRating === "3" ? 'selected' : '' %>>3 Sterne</option>
+                    <option value="4" <%= minRating === "4" ? 'selected' : '' %>>4 Sterne</option>
+                    <option value="5" <%= minRating === "5" ? 'selected' : '' %>>5 Sterne</option>
+                </select>
+            </div>
+            <div class="filter-section">
+                <label for="author">Autor:</label>
+                <input type="text" id="author" name="author" value="<%= author %>" placeholder="Autorname">
+            </div>
+            <button type="submit" class="cta-button">Filtern</button>
+        </form>
     </div>
+    
+        <!-- Anzeige der Rezensionen -->
+        <div class="reviews-section">
+            
+            <% if (reviews.length === 0) { %>
+                <p>Es wurden keine passenden Rezensionen gefunden.</p>
+            <% } else { %>
+                <% reviews.forEach(function(review) { %>
+                    <div class="review">
+                        <h3 class="review-title"><%= review.title %></h3>
+                        <p class="review-product">Produkt: <%= review.product %></p>
+
+                        <p class="review-author">Verfasst von: <%= review.author %></p>
+                        <p class="review-text"><%= review.text %></p>
+                        <p class="review-rating">
+                            Bewertung:
+                            <span class="stars">
+                                <% for (let i = 0; i < 5; i++) { %>
+                                    <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
+                                <% } %>
+                            </span>
+                            (<%= review.rating %> / 5)
+                        </p>
+                    </div>
+                    <hr class="review-divider">
+                <% }); %>
+            <% } %>
+        </div>
+
+
+ <!-- Formular für neue Rezensionen -->
+ <div class="review-form-container">
+    <h2>Ihre Rezension hinzufügen</h2>
+    <form action="/reviews" method="POST" class="review-form">
+        <label for="title">Titel:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="author">Ihr Name:</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="product">Produkt:</label>
+        <select id="product" name="product" required>
+            <option value="SleepWell™">SleepWell™</option>
+            <option value="WakeWell™">WakeWell™</option>
+            <option value="DreamSync™">DreamSync™ Combo + App</option>
+        </select>
+
+        <label for="rating">Bewertung:</label>
+
+        <div class="star-rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <!-- Verstecktes Eingabefeld für die Bewertung -->
+        <input type="hidden" id="rating" name="rating" required>
+
+
+        <label for="text">Ihre Rezension:</label>
+        <textarea id="text" name="text" rows="4" required></textarea>
+
+        <button type="submit" class="cta-button" style="margin: 0px">Rezension absenden</button>
+        
+        
+    </form>
+</div>
 </body>
 </html>

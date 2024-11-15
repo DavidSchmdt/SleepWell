@@ -163,31 +163,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
 document.addEventListener("DOMContentLoaded", () => {
     const reviewForm = document.querySelector(".review-form");
+    const submitButton = reviewForm.querySelector("button[type='submit']");
     const reviewsSection = document.querySelector(".reviews-section");
-
-    // Sterne-Bewertung handhaben
     const stars = document.querySelectorAll(".star-rating .star");
-    const ratingInput = document.querySelector("#rating");
+    const ratingInput = document.getElementById("rating");
 
+    // Sterne-Bewertung interaktiv machen
     stars.forEach(star => {
         star.addEventListener("click", () => {
-            const value = star.getAttribute("data-value");
-            ratingInput.value = value;
+            const rating = star.getAttribute("data-value");
+            ratingInput.value = rating;
 
-            // Highlighten der Sterne
-            stars.forEach(s => s.classList.remove("selected"));
-            for (let i = 0; i < value; i++) {
-                stars[i].classList.add("selected");
-            }
+            // Sterne visuell hervorheben
+            stars.forEach(s => {
+                if (s.getAttribute("data-value") <= rating) {
+                    s.classList.add("filled-star");
+                    s.classList.remove("empty-star");
+                } else {
+                    s.classList.remove("filled-star");
+                    s.classList.add("empty-star");
+                }
+            });
         });
     });
 
-    // AJAX-Formular
+    // AJAX-Formular absenden
     reviewForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // Verhindert das Standardverhalten (Seiten-Reload)
+        event.preventDefault(); // Standardverhalten verhindern
+
+        // Button deaktivieren, um mehrfaches Klicken zu verhindern
+        submitButton.disabled = true;
+        submitButton.textContent = "Senden...";
 
         const formData = new FormData(reviewForm);
 
@@ -198,7 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Fehler beim Speichern der Rezension");
+            }
+            return response.json();
+        })
         .then(newReview => {
             // Neue Rezension im DOM hinzufügen
             const reviewHTML = `
@@ -221,10 +234,82 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             reviewsSection.insertAdjacentHTML("beforeend", reviewHTML);
 
-            // Formular zurücksetzen
+            // Erfolgsfeedback anzeigen
+            alert("Rezension erfolgreich gespeichert!");
+
+            // Formular zurücksetzen und Button wieder aktivieren
             reviewForm.reset();
-            stars.forEach(s => s.classList.remove("selected"));
+            stars.forEach(s => s.classList.remove("filled-star", "empty-star"));
+            submitButton.disabled = false;
+            submitButton.textContent = "Rezension absenden";
         })
-        .catch(error => console.error("Fehler beim Hinzufügen der Rezension:", error));
+        .catch(error => {
+            console.error("Fehler beim Hinzufügen der Rezension:", error);
+            alert("Fehler beim Speichern der Rezension. Bitte versuchen Sie es erneut.");
+            submitButton.disabled = false;
+            submitButton.textContent = "Rezension absenden";
+        });
+    });
+});
+
+
+// public/js/script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star-rating .star');
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = star.getAttribute('data-value');
+            ratingInput.value = rating;
+
+            // Aktualisieren der Sternanzeige
+            stars.forEach(s => {
+                if (s.getAttribute('data-value') <= rating) {
+                    s.classList.add('filled-star');
+                    s.classList.remove('empty-star');
+                } else {
+                    s.classList.remove('filled-star');
+                    s.classList.add('empty-star');
+                }
+            });
+        });
+    });
+
+    // Optional: Initiales Laden der Sterne basierend auf dem versteckten Input (für Bearbeitungsformular)
+    const initialRating = ratingInput.value;
+    if (initialRating) {
+        stars.forEach(s => {
+            if (s.getAttribute('data-value') <= initialRating) {
+                s.classList.add('filled-star');
+                s.classList.remove('empty-star');
+            } else {
+                s.classList.remove('filled-star');
+                s.classList.add('empty-star');
+            }
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const filterMenu = document.getElementById('filter-menu');
+    const filterTab = document.getElementById('filter-tab');
+    const closeFilterButton = document.getElementById('close-filter');
+
+    // Öffnen des Filtermenüs durch Klicken auf den Tab
+    filterTab.addEventListener('click', () => {
+        filterMenu.classList.add('open');
+    });
+
+    // Schließen des Filtermenüs
+    closeFilterButton.addEventListener('click', () => {
+        filterMenu.classList.remove('open');
+    });
+
+    // Schließen des Filtermenüs bei Klick außerhalb
+    document.addEventListener('click', (event) => {
+        if (!filterMenu.contains(event.target) && !filterTab.contains(event.target)) {
+            filterMenu.classList.remove('open');
+        }
     });
 });

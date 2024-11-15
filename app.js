@@ -1,6 +1,11 @@
+require('dotenv').config(); // Laden der Umgebungsvariablen
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
+// Verwende die Middleware für URL-kodierte und JSON-Daten
+const bodyParser = require('body-parser');
+const Review = require('./models/Review');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,8 +16,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layout');
 
-// Verwende die Middleware für URL-kodierte und JSON-Daten
-const bodyParser = require('body-parser');
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+// Verbindung zu MongoDB herstellen
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB verbunden'))
+.catch(err => console.error('MongoDB-Verbindungsfehler:', err));
+
 
 // Middleware zum Parsen von JSON und URL-kodierten Daten
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -138,31 +156,105 @@ let reviews = [
 ];
 
 // Route zum Anzeigen der Rezensionen
-app.get('/reviews', (req, res) => {
-    const product = req.query.product || "SleepWell™"; // Standardprodukt setzen, falls keins ausgewählt wurde
-
-    // Filtert Rezensionen nach dem ausgewählten Produkt
-    const filteredReviews = reviews.filter(review => review.product === product);
-
-    res.render('reviews', { 
-        title: `Rezensionen - ${product}`, 
-        reviews: filteredReviews,
-        product: {
-            name: product,
+app.get('/reviews', async (req, res) => {
+    try {
+        const { product, minRating, author, success } = req.query;
+        // Basisabfrage
+        const query = {};
+        // Filter nach Produkt
+        if (product) {
+            query.product = product;
         }
-    });
+        // Filter nach minimaler Bewertung
+        if (minRating) {
+            query.rating = { $gte: parseInt(minRating) };
+        }
+        // Filter nach Autor
+        if (author) {
+            query.author = { $regex: new RegExp(author, 'i') }; // Unscharfe Suche (case-insensitive)
+        }
+        // Datenbankabfrage mit den Filtern
+        const reviews = await Review.find(query).sort({ createdAt: -1 });
+        // Erfolgsmeldung weiterleiten
+        res.render('reviews', { 
+            title: `Rezensionen - ${product || 'Alle Produkte'}`, 
+            reviews,
+            product,
+            minRating,
+            author,
+            success: success === 'true' // Erfolgsmeldung nur, wenn `success=true` in Query-Params
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Serverfehler");
+    }
 });
 
-// Route zum Hinzufügen einer neuen Rezension
-app.post('/reviews', (req, res) => {
-    const newReview = {
-        title: req.body.title,
-        author: req.body.author,
-        text: req.body.text,
-        rating: req.body.rating,
-        product: req.body.product
-    };
-    reviews.push(newReview);
-    res.json(newReview); // Senden der neuen Rezension als JSON-Antwort
+
+app.post('/reviews', async (req, res) => {
+    try {
+        const { title, author, text, rating, product } = req.body;
+
+        if (!title || !author || !text || !rating || !product) {
+            return res.status(400).json({ error: "Alle Felder müssen ausgefüllt sein!" });
+        }
+
+        // Überprüfung auf Duplikate
+        const existingReview = await Review.findOne({ title, author, product });
+        if (existingReview) {
+            return res.status(409).json({ error: "Eine ähnliche Rezension existiert bereits." });
+        }
+
+        // Neue Rezension speichern
+        const newReview = new Review({ title, author, text, rating, product });
+        await newReview.save();
+
+        res.status(201).json(newReview);
+    } catch (err) {
+        console.error("Fehler beim Speichern der Rezension:", err.message);
+        res.status(500).json({ error: "Fehler beim Speichern der Rezension" });
+    }
+});
+
+
+
+// Route zum Bearbeiten einer Rezension
+app.get('/reviews/edit/:id', async (req, res) => {
+    try {
+        const review = await Review.findById(req.params.id);
+        if (!review) {
+            return res.status(404).send("Rezension nicht gefunden");
+        }
+        res.render('editReview', { review });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Serverfehler");
+    }
+});
+
+app.post('/reviews/edit/:id', async (req, res) => {
+    try {
+        const { title, author, text, rating, product } = req.body;
+        await Review.findByIdAndUpdate(req.params.id, { title, author, text, rating, product });
+        res.redirect('/reviews?product=' + encodeURIComponent(product));
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Serverfehler");
+    }
+});
+
+// Route zum Löschen einer Rezension
+app.post('/reviews/delete/:id', async (req, res) => {
+    try {
+        const review = await Review.findById(req.params.id);
+        if (!review) {
+            return res.status(404).send("Rezension nicht gefunden");
+        }
+        await Review.findByIdAndDelete(req.params.id);
+        res.redirect('/reviews?product=' + encodeURIComponent(review.product));
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Serverfehler");
+    }
 });
 

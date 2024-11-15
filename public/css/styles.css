@@ -103,6 +103,7 @@ a:hover{
 /* Navbar */
 .navbar {
     position: fixed;
+    z-index: 2000; 
     top: 0;
     width: 100%;
     display: flex;
@@ -110,7 +111,6 @@ a:hover{
     padding: 1em 0;
     background: rgba(0, 30, 50, 1);
     color: #fff;
-    z-index: 1000;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: background 0.3s, padding 0.3s;
     height: 50px;
@@ -738,4 +738,112 @@ input[type="text"], textarea, select {
 
 .star.hover {
     color: #ffe597; /* Helleres Gold für Hover-Sterne */
+}
+
+/* Filterformular */
+/* Popout-Menü-Stile */
+/* Filter-Tab */
+.filter-tab {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: #005f73;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    writing-mode: vertical-rl; /* Vertikale Schrift */
+    text-orientation: mixed; /* Schriftanpassung für vertikale Darstellung */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.filter-tab:hover {
+    background-color: #004753;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Popout-Menü */
+.filter-menu {
+    position: fixed;
+    top: 100px;
+    left: -500px;
+    width: 300px;
+    height: 100%;
+    background-color: #f9f9f9;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: left 0.3s ease;
+    z-index: 1400;
+    border-right: 1px solid #ccc;
+}
+
+.filter-menu.open {
+    left: 0;
+    top:100px
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #005f73;
+}
+
+.close-filter-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #005f73;
+    line-height: 1;
+    padding: 5px;
+}
+
+.close-filter-button:hover {
+    color: #003f53;
+}
+
+/* Filterformular */
+.filter-section {
+    margin-bottom: 15px;
+}
+
+.filter-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter-section input,
+.filter-section select {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
+
+/* Erfolgsmeldung */
+.success-message {
+    background-color: #d4edda; /* Sanftes Grün */
+    color: #155724; /* Dunkelgrüner Text */
+    border: 1px solid #c3e6cb; /* Grüner Rand */
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
 }
