@@ -1,3 +1,7 @@
+<!-- views/reviews.ejs -->
+
+<script src="/js/script.js" defer></script>
+
 <body class="page-body">
     <div class="main-container">
         <h1 class="heading-primary">Rezensionen</h1>
@@ -46,7 +50,7 @@
         <div class="reviews-section">
             <% if (reviews && reviews.length > 0) { %>
                 <% reviews.forEach(review => { %>
-                    <div>
+                    <div class="review">
                         <h2><%= review.title || 'Kein Titel' %></h2>
                         <p>Autor: <%= review.author || 'Unbekannt' %></p>
                         <p>Bewertung: <%= review.rating || 0 %> Sterne</p>
