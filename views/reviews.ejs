@@ -20,6 +20,7 @@
             <% reviews.forEach(function(review) { %>
                 <div class="review">
                     <h3 class="review-title"><%= review.title %></h3>
+                    <label for="product">Produkt: <%= review.product %></label>
                     <p class="review-author">Verfasst von: <%= review.author %></p>
                     <p class="review-text"><%= review.text %></p>
                     <p class="review-rating">
@@ -68,7 +69,9 @@
 
                 <label for="text">Ihre Rezension:</label>
                 <textarea id="text" name="text" rows="4" required></textarea>
-
+                <div class="disclaimer-box" style="margin: 5px 0 5px 0;">
+                    Wenn sie auf <strong>Rezension absenden</strong> drücken, akzeptieren sie die <a href="/privacy" style="color:#005f73;">Datenschutzerklärung</a>.
+                </div>
                 <button type="submit" class="cta-button" style="margin: 0px">Rezension absenden</button>
             </form>
         </div>

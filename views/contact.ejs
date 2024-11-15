@@ -5,22 +5,45 @@
             Wir freuen uns, von Ihnen zu hören! Egal, ob Sie Fragen zu unseren Produkten haben oder einfach nur Komplimente geben möchten – unser Team steht Ihnen gerne zur Verfügung. Nutzen Sie das untenstehende Formular, um uns zu kontaktieren, oder schreiben Sie uns direkt eine E-Mail.
         </p>
 
-        <form action="#" method="post" class="contact-form">
+        <form id="contactForm" class="contact-form">
             <label for="name" class="form-label">Ihr Name:</label>
             <input type="text" id="name" name="name" class="form-input" required>
-
+        
             <label for="email" class="form-label">Ihre E-Mail-Adresse:</label>
             <input type="email" id="email" name="email" class="form-input" required>
-
+        
             <label for="message" class="form-label">Ihre Nachricht:</label>
             <textarea id="message" name="message" class="form-textarea" required></textarea>
-
-            <button type="submit" class="submit-button">Nachricht senden</button>
+        
+            <button type="submit" class="cta-button" style=" margin: 10px 0px 0px 0px">Nachricht senden</button>
         </form>
+        
+        <script>
+            async function submitForm() {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                };
+        
+                try {
+                    const response = await fetch('http://localhost:3000/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData),
+                    });
+                    const result = await response.json();
+                    alert(result.message);
+                } catch (error) {
+                    console.error('Fehler:', error);
+                }
+            }
+        </script>
+        
 
         <div class="contact-info disclaimer-box">
             <p>
-                Sie können uns auch direkt per E-Mail erreichen: <a href="mailto:info@sleepwellnow.store" class="link-default">info@sleepwellnow.store</a><br>
+                Sie können uns auch direkt per E-Mail erreichen: <a href="mailto:support@sleepwellnow.store" class="link-default">support@sleepwellnow.store</a><br>
                 Oder rufen Sie uns <strong>nicht</strong> an unter: <a href="tel:08006666666" class="link-default">0800 666 6666</a>
             </p>
         </div>

@@ -163,3 +163,68 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const reviewForm = document.querySelector(".review-form");
+    const reviewsSection = document.querySelector(".reviews-section");
+
+    // Sterne-Bewertung handhaben
+    const stars = document.querySelectorAll(".star-rating .star");
+    const ratingInput = document.querySelector("#rating");
+
+    stars.forEach(star => {
+        star.addEventListener("click", () => {
+            const value = star.getAttribute("data-value");
+            ratingInput.value = value;
+
+            // Highlighten der Sterne
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add("selected");
+            }
+        });
+    });
+
+    // AJAX-Formular
+    reviewForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // Verhindert das Standardverhalten (Seiten-Reload)
+
+        const formData = new FormData(reviewForm);
+
+        fetch("/reviews", {
+            method: "POST",
+            body: new URLSearchParams(formData),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(response => response.json())
+        .then(newReview => {
+            // Neue Rezension im DOM hinzufügen
+            const reviewHTML = `
+                <div class="review">
+                    <h3 class="review-title">${newReview.title}</h3>
+                    <label for="product">Produkt: ${newReview.product}</label>
+                    <p class="review-author">Verfasst von: ${newReview.author}</p>
+                    <p class="review-text">${newReview.text}</p>
+                    <p class="review-rating">
+                        Bewertung:
+                        <span class="stars">
+                            ${Array(5).fill().map((_, i) => `
+                                <span class="${i < newReview.rating ? 'filled-star' : 'empty-star'}">★</span>
+                            `).join('')}
+                        </span>
+                        (${newReview.rating} / 5)
+                    </p>
+                </div>
+                <hr class="review-divider">
+            `;
+            reviewsSection.insertAdjacentHTML("beforeend", reviewHTML);
+
+            // Formular zurücksetzen
+            reviewForm.reset();
+            stars.forEach(s => s.classList.remove("selected"));
+        })
+        .catch(error => console.error("Fehler beim Hinzufügen der Rezension:", error));
+    });
+});
