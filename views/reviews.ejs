@@ -55,26 +55,21 @@
         <!-- Anzeige der Rezensionen -->
         <div class="reviews-section">
             
-            <% if (reviews.length === 0) { %>
-                <p>Es wurden keine passenden Rezensionen gefunden.</p>
-            <% } else { %>
-                <% reviews.forEach(function(review) { %>
+            <% if (reviews && reviews.length > 0) { %>
+                <% reviews.forEach(review => { %>
                     <div class="review">
-                        <h3 class="review-title"><%= review.title %></h3>
-                        <p class="review-product">Produkt: <%= review.product %></p>
-
-                        <p class="review-author">Verfasst von: <%= review.author %></p>
-                        <p class="review-text"><%= review.text %></p>
-                        <p class="review-rating">
-                            Bewertung:
-                            <span class="stars">
-                                <% for (let i = 0; i < 5; i++) { %>
-                                    <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
-                                <% } %>
-                            </span>
-                            (<%= review.rating %> / 5)
-                        </p>
+                        <h2><%= review.title || 'Kein Titel' %></h2>
+                        <p>Autor: <%= review.author || 'Unbekannt' %></p>
+                        <p>Bewertung: <%= review.rating || 0 %> Sterne</p>
+                        <p>Produkt: <%= review.product || 'Unbekannt' %></p>
+                        <p><%= review.text || 'Keine Bewertungstext vorhanden' %></p>
                     </div>
+                    <hr>
+                <% }) %>
+            <% } else { %>
+                <p>Keine Rezensionen gefunden.</p>
+            <% } %>
+        
                     <hr class="review-divider">
                 <% }); %>
             <% } %>

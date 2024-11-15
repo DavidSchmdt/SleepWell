@@ -37,9 +37,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((err, req, res, next) => {
-    console.error('Globaler Fehler:', err.message);
-    res.status(500).send('Serverfehler');
+    console.error('Globaler Fehler:', err.stack);
+    res.status(500).send("Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
 });
+
 
 // Serve static files (CSS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -119,12 +120,14 @@ app.listen(PORT, () => {
 
 app.get('/health', async (req, res) => {
     try {
-        // Testen Sie die Verbindung zu MongoDB
+        if (mongoose.connection.readyState !== 1) {
+            throw new Error("Datenbank nicht verbunden");
+        }
         await mongoose.connection.db.admin().ping();
         res.status(200).send('OK');
     } catch (err) {
-        console.error('Health-Check Fehler:', err.message);
-        res.status(500).send('Health-Check fehlgeschlagen');
+        console.error("Health-Check Fehler:", err.message);
+        res.status(500).send("Health-Check fehlgeschlagen");
     }
 });
 
@@ -203,22 +206,37 @@ app.get('/reviews', async (req, res) => {
 
         console.log("Empfangene Query-Parameter:", req.query);
 
+        // Überprüfung der MongoDB-Verbindung
+        if (mongoose.connection.readyState !== 1) {
+            throw new Error("Datenbank nicht verbunden");
+        }
+
+        // Basisabfrage erstellen
         const query = {};
+
+        // Produktfilter
         if (product) query.product = product;
+
+        // Bewertung validieren und filtern
         if (minRating) {
-            if (isNaN(parseInt(minRating))) {
+            const minRatingValue = parseInt(minRating);
+            if (isNaN(minRatingValue)) {
                 throw new Error("Ungültiger Wert für minRating");
             }
-            query.rating = { $gte: parseInt(minRating) };
+            query.rating = { $gte: minRatingValue };
         }
-        if (author) query.author = { $regex: new RegExp(author, 'i') };
+
+        // Autor filtern
+        if (author) query.author = { $regex: new RegExp(author, 'i') }; // Case-insensitive Suche
 
         console.log("Datenbankabfrage:", query);
 
+        // Datenbankabfrage ausführen
         const reviews = await Review.find(query).sort({ createdAt: -1 });
 
-        console.log("Gefundene Reviews:", reviews);
+        console.log("Gefundene Rezensionen:", reviews);
 
+        // Template mit den gefundenen Rezensionen rendern
         res.render('reviews', {
             title: `Rezensionen - ${product || 'Alle Produkte'}`,
             reviews,
@@ -228,10 +246,11 @@ app.get('/reviews', async (req, res) => {
             success: success === 'true'
         });
     } catch (err) {
-        console.error("Fehler in der /reviews-Route:", err.message);
-        res.status(500).send("Fehler bei der Verarbeitung der Anfrage");
+        console.error("Fehler in der /reviews-Route:", err.stack);
+        res.status(500).send("Serverfehler: " + err.message);
     }
 });
+
 
 // Route zum Bearbeiten einer Rezension
 app.get('/reviews/edit/:id', async (req, res) => {
