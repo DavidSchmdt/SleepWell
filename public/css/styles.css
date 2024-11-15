@@ -663,56 +663,6 @@ footer input, footer button {
 }
 
 
-.reviews-section {
-    margin-top: 20px;
-}
-
-.review {
-    padding: 15px 0;
-}
-
-.review-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.review-author, .review-text, .review-rating {
-    color: #555;
-    margin: 5px 0;
-}
-
-.review-divider {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 15px 0;
-}
-
-.stars {
-    display: inline-flex;
-    gap: 2px;
-}
-
-.filled-star {
-    color: #FFD700; /* Goldfarbe für gefüllte Sterne */
-}
-
-.empty-star {
-    color: #ddd; /* Graue Farbe für leere Sterne */
-}
-
-.review-form-container {
-    margin-top: 30px;
-}
-
-.review-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-
 input[type="text"], textarea, select {
     padding: 10px;
     border: 1px solid #ddd;
@@ -837,13 +787,139 @@ input[type="text"], textarea, select {
 
 
 
-/* Erfolgsmeldung */
-.success-message {
-    background-color: #d4edda; /* Sanftes Grün */
-    color: #155724; /* Dunkelgrüner Text */
-    border: 1px solid #c3e6cb; /* Grüner Rand */
-    padding: 10px 15px;
-    margin-bottom: 20px;
+.reviews-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review {
+    border: 1px solid #e0e0e0;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+    padding: 15px ; /* Reduziert das Padding innerhalb des Review-Containers */
+   }
+
+.review-title {
+    margin-top: 0;
+    font-size: 1.4em;
     font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.review-author {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.review-text {
+    margin: 10px 0;
+    color: #444;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.review-rating {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.review-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 3px;
+    font-size: 1.2em;
+}
+
+.filled-star {
+    color: #FFD700; /* Goldfarbe für gefüllte Sterne */
+}
+
+.empty-star {
+    color: #ddd; /* Graue Farbe für leere Sterne */
+}
+
+.review-form-container {
+    margin-top: 40px;
+    padding: 20px;
+    padding-top: 0px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-form h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-form label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+}
+
+.review-form textarea {
+    resize: vertical;
+}
+
+.review-form .cta-button {
+    padding: 10px 20px;
+    background-color: #005f73;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.review-form .cta-button:hover {
+    background-color: #00424d;
+}
+
+.filter-menu {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.filter-menu h3 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.filter-form .filter-section {
+    margin-bottom: 15px;
 }

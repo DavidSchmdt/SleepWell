@@ -45,25 +45,30 @@
             <button type="submit" class="cta-button">Filtern</button>
         </form>
     </div>
+    <div class="reviews-section">
+        <% if (reviews && reviews.length > 0) { %>
+            <% reviews.forEach(review => { %>
+                <div class="review">
+                    <h2 class="review-title"><%= review.title || 'Kein Titel' %></h2>
+                    <p>Produkt: <%= review.product || 'Nicht angegeben' %></p>
+                    <p class="review-author">Autor: <%= review.author || 'Unbekannt' %></p>
+                    <p class="review-text"><%= review.text || 'Keine Beschreibung verfügbar' %></p>
+                    <p class="review-rating">
+                        Bewertung:
+                        <span class="stars">
+                            <% for (let i = 0; i < 5; i++) { %>
+                                <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
+                            <% } %>
+                        </span>
+                        (<%= review.rating || 0 %> / 5)
+                    </p>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>Keine Rezensionen gefunden.</p>
+        <% } %>
+    </div>
     
-        <!-- Anzeige der Rezensionen -->
-        <div class="reviews-section">
-            <% if (reviews && reviews.length > 0) { %>
-                <% reviews.forEach(review => { %>
-                    <div class="review">
-                        <h2><%= review.title || 'Kein Titel' %></h2>
-                        <p>Autor: <%= review.author || 'Unbekannt' %></p>
-                        <p>Bewertung: <%= review.rating || 0 %> Sterne</p>
-                        <p>Produkt: <%= review.product || 'Nicht angegeben' %></p>
-                        <p><%= review.text || 'Keine Beschreibung verfügbar' %></p>
-                    </div>
-                    <hr>
-                <% }); %>
-            <% } else { %>
-                <p>Keine Rezensionen gefunden.</p>
-            <% } %>
-            
-        </div>
 
 
  <!-- Formular für neue Rezensionen -->
