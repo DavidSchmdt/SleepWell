@@ -1,3 +1,55 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    @media (max-width: 768px) {
+    .carousel {
+        height: 200px;
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .product-details {
+        font-size: 14px; /* Kleinerer Text auf mobilen Geräten */
+    }
+
+    .add-to-cart-container button {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    .features-grid {
+        flex-direction: column; /* Stapelt Features untereinander auf mobilen Geräten */
+    }
+
+    .feature-card {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+}
+.product-overview {
+    padding: 5px; /* Weniger Padding auf mobilen Geräten */
+}
+
+.carousel {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .product-overview {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media (max-width: 480px) {
+    .carousel {
+        height: 150px; /* Kleinere Höhe für Handy */
+    }
+}
+
+
+
+
+</style>
+
 <script src="../js/script.js"></script>
 
 <body class="page-body">

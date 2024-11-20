@@ -1,58 +1,99 @@
-
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <title>SleepWell™ - Perfekter Schlaf für jeden Tag</title>
     <style>
-        
+        /* Mobile-friendly styles */
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         .main-container {
             max-width: 1200px;
-
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .carousel {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .content {
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 2em;
+            color: #333;
+        }
+        .content p {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .purchase-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #7aceeb;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .purchase-button:hover {
+            background-color: #5cb7d6;
         }
         /* Adjusted Features Grid */
-        .features-grid {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5em;
-            margin-top: 2em;
-        }
-        .feature-card {
-            background-color: #f9f9f9;
-            
-        }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5em;
             margin-top: 2em;
         }
-            
         .feature-card {
             background-color: #f9f9f9;
             padding: 1em;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: 130px;
             overflow: hidden;
-            position: relative;
             transition: all 0.3s ease;
+            height: auto;
+            text-align: left;
         }
-    
+        .feature-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
         .feature-card h3 {
             font-size: 1.2em;
             margin-bottom: 0.5em;
         }
-            
         .feature-card p {
-            overflow: hidden;
-            height: 100px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            transition: height 0.3s ease;
+            font-size: 0.9em;
+            color: #555;
         }
-            
-        .feature-card:hover {
-            height: auto;
+        @media (min-width: 768px) {
+            .content h1 {
+                font-size: 2.5em;
+            }
+            .content p {
+                font-size: 1.2em;
+            }
         }
-            
-        .feature-card:hover p {
-            height: auto;
-            white-space: normal;
+        @media (min-width: 1024px) {
+            .content h1 {
+                font-size: 3em;
+            }
+            .content p {
+                font-size: 1.3em;
+            }
         }
     </style>
 </head>
@@ -61,7 +102,7 @@
     <div class="main-container">
         <!-- SleepWell™ Section -->
         <div class="product-section" id="sleepwell">
-            <img class= "carousel" src="../images/SleepWell/1cut.png">
+            <img class="carousel" src="../images/SleepWell/1cut.png" alt="SleepWell Bett">
 
             <!-- Content for SleepWell -->
             <div class="content">
@@ -73,32 +114,33 @@
 
                 <!-- Features for SleepWell -->
                 <div class="features-grid">
-            <div class="feature-card">
-                <h3>🦾🧠SmartSleep™</h3>
-                <p>KI-gestützte Sensoren überwachen über 200 Körperparameter für optimalen Schlaf.</p></div>
-            <div class="feature-card">
-                <h3>🔊Soundscapes™</h3>
-                <p>Beruhigende Klangwelten für tiefen, erholsamen Schlaf, verbessert durch Sinuswellen.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🧘🏻DeepRelax™</h3>
-                <p>Mikromassage passt sich Bewegungen an und sorgt für intensive Entspannung.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🌡DynamicTemp™</h3>
-                <p>Automatische Temperaturanpassung für perfekte Schlafbedingungen das ganze Jahr.</strong>.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🙇BioSync™ </h3>
-                <p>Natürliches Wecken zum idealen Zeitpunkt, sanft unterstützt durch Klang, Vibration und Temperatur.</p>
-            </div>
+                    <div class="feature-card">
+                        <h3>🦾🧠SmartSleep™</h3>
+                        <p>KI-gestützte Sensoren überwachen über 200 Körperparameter für optimalen Schlaf.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔊Soundscapes™</h3>
+                        <p>Beruhigende Klangwelten für tiefen, erholsamen Schlaf, verbessert durch Sinuswellen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🧘🏻DeepRelax™</h3>
+                        <p>Mikromassage passt sich Bewegungen an und sorgt für intensive Entspannung.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🌡DynamicTemp™</h3>
+                        <p>Automatische Temperaturanpassung für perfekte Schlafbedingungen das ganze Jahr.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🙇BioSync™</h3>
+                        <p>Natürliches Wecken zum idealen Zeitpunkt, sanft unterstützt durch Klang, Vibration und Temperatur.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- WakeWell™ Section -->
         <div class="product-section" id="wakewell">
-            <img class= "carousel" src="../images/WakeWell/1.png">
+            <img class="carousel" src="../images/WakeWell/1.png" alt="WakeWell Produkt">
 
             <!-- Content for WakeWell -->
             <div class="content">
@@ -112,7 +154,7 @@
                 <div class="features-grid">
                     <div class="feature-card">
                         <h3>💥 PulseBoost™ Energy-Release</h3>
-                        <p>Maximale Morgenenergie mit individuell bis zu 100mal stärker dosiertem Koffein-Boost für den perfekten Start.</p>
+                        <p>Maximale Morgenenergie mit individuell dosiertem Koffein-Boost für den perfekten Start.</p>
                     </div>
                     <div class="feature-card">
                         <h3>☕ AromaBrew™</h3>
@@ -120,9 +162,7 @@
                     </div>
                     <div class="feature-card">
                         <h3>💊 VitalCore™ Nährstoffdosierung</h3>
-                        <p>Automatische Anpassung an Ihren Bedarf, um Sie mit Nährstoffen für den Tag zu versorgen.
-                            Auch ist es möglich, unser neues Vitamin vom Typen KoaMett™ einspeisen zu lassen. Dieses wirkt beruhigend und erfrischend.
-                        </p>
+                        <p>Automatische Anpassung an Ihren Bedarf, um Sie mit Nährstoffen für den Tag zu versorgen. KoaMett™ Vitamin wirkt beruhigend und erfrischend.</p>
                     </div>
                     <div class="feature-card">
                         <h3>❄️ ThermoSense™</h3>
@@ -135,13 +175,12 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="main-container">
+
         <!-- Integration SleepWell & WakeWell Section -->
         <div class="product-section" id="integration">
-            <img class="carousel" src="../images/IntegrationGlowStretched.png">
+            <img class="carousel" src="../images/IntegrationGlowStretched.png" alt="DreamSync Integration">
                     <div class="content">
-                        <h1>DreamSync™- Die perfekte Synergie</h1>
+                        <h1>DreamSync™ - Die perfekte Synergie</h1>
                         <p>Die DreamSync™ App vereint SleepWell™ und WakeWell™ in einem intelligenten, vernetzten System, das Schlaf- und Morgenroutinen ideal aufeinander abstimmt. Durch die nahtlose Kombination der innovativen Funktionen beider Produkte entsteht ein harmonischer Übergang von einer tiefen, erholsamen Nacht zu einem kraftvollen, energiegeladenen Start in den Tag. DreamSync™ nutzt modernste Technologie, um sich an deinen individuellen Rhythmus anzupassen, und stellt sicher, dass jede Nacht zur optimalen Erholung beiträgt – und jeder Morgen mit Energie beginnt.</p>            
                         <div class="features-grid">
                             <div class="feature-card">
@@ -168,8 +207,6 @@
                     </div>
                 </div>
             </div>
-            
-    
 
 </body>
 </html>
