@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
             wakewellRatingTextElement.textContent = "Fehler beim Laden der Bewertung.";
         });
 });
-/*
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const toggleDarkMode = document.getElementById("dark-mode-toggle");
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-*/
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const newsletterForm = document.getElementById("newsletter-form");

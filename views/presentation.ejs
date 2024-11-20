@@ -1,0 +1,90 @@
+<main>
+    <!-- Hero Section -->
+    <section class="hero" style="margin-top: -60px; background-image: url('../images/SleepWell/1.png')">
+        <div class="hero-text">
+            <h1 style="color: rgb(153, 226, 242)">Die SleepWell™ Website – Innovativ und Modern</h1>
+            <p>Erlebe die perfekte Kombination aus Design, Funktionalität und Technologie.</p>
+            <p>Unsere Website ermöglicht es dir, Informationen einfach zu finden, Rezensionen in Echtzeit zu schreiben und Features interaktiv zu entdecken.</p>
+        </div>
+    </section>
+
+    <!-- Why the Website Section -->
+    <section class="content-section">
+        <h2>Warum unsere Website einzigartig ist</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>📊 Dynamische Rezensionen</h3>
+                <p>Kundenmeinungen werden in Echtzeit aus unserer MongoDB Atlas-Datenbank geladen und angezeigt.</p>
+            </div>
+            <div class="feature-card">
+                <h3>✍️ Live-Bewertungen</h3>
+                <p>Besucher können ihre Erfahrungen sofort teilen, und die Rezensionen erscheinen direkt auf der Seite.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔒 Sicherheit & Zuverlässigkeit</h3>
+                <p>Ihre Daten sind durch modernste Technologie sicher verschlüsselt und geschützt.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Schnelle Ladezeiten</h3>
+                <p>Unsere optimierte Architektur sorgt für eine reibungslose Nutzung, egal auf welchem Gerät.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax" style="background-image: url('../images/SleepWell/2.png');">
+        Entdecken Sie die Technologie hinter der Website
+    </section>
+
+    <!-- Customer Testimonials Section -->
+    <section class="content-section" id="kundenmeinungen">
+        <h2>Was unsere Kunden sagen</h2>
+        <p>Unsere Website nutzt die neuesten Technologien, um Rezensionen zu sammeln und anzuzeigen. Hier sehen Sie einige der Meinungen, die von unseren Nutzern verfasst wurden:</p>
+        <div class="features-grid">
+            <% if (topReviews && topReviews.length > 0) { %>
+                <% topReviews.forEach(review => { %>
+                    <div class="feature-card">
+                        <p class="review-rating">
+                            <span class="stars">
+                                <% for (let i = 0; i < 5; i++) { %>
+                                    <span class="<%= i < review.rating ? 'filled-star' : 'empty-star' %>">★</span>
+                                <% } %>
+                            </span>
+                        </p>
+                        <h3 class="review-title"><%= review.title || 'Kein Titel' %></h3>
+                        <p><%= review.text || 'Keine Beschreibung verfügbar' %></p>
+                        <strong>- <%= review.author || 'Anonym' %></strong>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>Es gibt noch keine Bewertungen mit 5 Sternen.</p>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="content-section">
+        <h2>Möchten Sie Ihre Erfahrungen teilen?</h2>
+        <p>Ihre Meinung ist wichtig für uns und hilft anderen Kunden, mehr über unsere Produkte und Dienstleistungen zu erfahren.</p>
+        <a href="/reviews" class="cta-button">Rezension schreiben</a>
+    </section>
+
+
+    <section class="parallax" style="position: relative; background-image: url('https://pbs.twimg.com/profile_images/1483552953357287428/L1EpXmpC_400x400.jpg'); background-size: cover; background-position: center;">
+        <!-- Overlay für Abdunkelung -->
+        
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3); z-index: 1;"></div>
+        <div style="position: relative; z-index: 2; padding: 2rem; text-align: center;">
+            <h2 style="color: #7aceeb;z-index: 2">Dankeschön fürs Zuhören!</h2>
+            <a href="/" class="cta-button">Zur Startseite</a>
+        </div>
+    </section>
+      
+            
+      
+        <!-- Inhalt -->
+        
+    
+    
+
+</main>

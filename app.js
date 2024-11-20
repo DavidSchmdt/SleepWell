@@ -138,12 +138,31 @@ app.get('/', async (req, res) => {
     }
 });
 
-
-
-
 app.get('/product', (req, res) => {
-    res.render('product', { title: 'SleepWell™ Bett - Dein Schlüssel zu erholsamem Schlaf' });
+    res.render('product', { title: 'SleepWell™ kaufen' });
 });
+
+
+app.get('/presentation', async (req, res) => {
+    try {
+        // Filtert Rezensionen mit mindestens 4 Sternen aus der Datenbank
+        const allReviews = await Review.find();
+
+        // Mischen der Rezensionen und Auswahl von bis zu 3 zufälligen Einträgen
+        const shuffledReviews = allReviews.sort(() => 0.5 - Math.random());
+        const topReviews = shuffledReviews.slice(0, 3);
+
+        // Rendern der `presentation`-Seite mit den Rezensionen
+        res.render('presentation', {
+            title: 'Präsentation der SleepWell™ Website',
+            topReviews // Dynamische Rezensionen an das Template übergeben
+        });
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Rezensionen:', err.message);
+        res.status(500).send('Serverfehler: Rezensionen konnten nicht geladen werden');
+    }
+});
+
 
 // Route for SleepWell™ purchase page
 app.get('/buy-sleepwell', (req, res) => {
