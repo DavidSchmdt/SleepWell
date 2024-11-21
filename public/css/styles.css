@@ -9,12 +9,12 @@ body {
     scroll-behavior: smooth;
     background-color: #f8f8f8;
     overflow-x: hidden;
-    overflow-y: invisible;
 }
 
 ::-webkit-scrollbar {
     display: none;
 }
+
 /* Main Container */
 .main-container, #site-container {
     max-width: 800px;
